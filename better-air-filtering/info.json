@@ -1,0 +1,13 @@
+{
+    "name": "better-air-filtering",
+    "version": "0.1.0",
+    "title": "Better Air Filtering",
+    "author": "Joey De Pauw",
+    "contact": "joeydepauw@gmail.com",
+    "homepage": "",
+    "factorio_version": "0.17",
+    "dependencies": [
+      "base >= 0.17"
+    ],
+    "description": "An extension to the air filtering mod by Schorty."
+}
