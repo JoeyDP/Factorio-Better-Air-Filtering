@@ -1,9 +1,5 @@
 data:extend({
     {
-        type = "fuel-category",
-        name = "pollution-filter"
-    },
-    {
         type = "assembling-machine",
         name = "air-filter-machine",
         icon = "__better-air-filtering__/graphics/icons/air-filter-machine.png",
@@ -26,6 +22,7 @@ data:extend({
             line_length = 8,
             shift = { 0.4, -0.06 }
         },
+        match_animation_speed_to_activity = true,
         open_sound = { filename = "__base__/sound/machine-open.ogg", volume = 0.85 },
         close_sound = { filename = "__base__/sound/machine-close.ogg", volume = 0.75 },
         working_sound =
@@ -38,17 +35,15 @@ data:extend({
         {
             {
                 production_type = "input",
-                pipe_picture = assembler3pipepictures(),
-                pipe_covers = pipecoverspictures(),
+                filter = "pollution",
                 base_area = 10,
                 base_level = -1,
-                pipe_connections = { { type = "input", position = { 0, -2 } } },
-                secondary_draw_orders = { north = -1 }
+                pipe_connections = {},
             },
             off_when_no_fluid_recipe = true
         },
-        crafting_categories = { "crafting-air-filter" },
-        crafting_speed = 1.0,
+        crafting_categories = { "air-filtering-basic" },
+        crafting_speed = 0.5,
         energy_source =
         {
             type = "burner",
@@ -56,9 +51,8 @@ data:extend({
             usage_priority = "secondary-input",
             fuel_inventory_size = 1,
             burnt_inventory_size = 1,
-            emissions = -0.06
         },
-        energy_usage = "1MW",
+        energy_usage = "0.5MW",
         fixed_recipe = "filter-air",
         ingredient_count = 1,
         module_slots = 0,
@@ -87,6 +81,7 @@ data:extend({
             line_length = 8,
             shift = { 0.4, -0.06 }
         },
+        match_animation_speed_to_activity = true,
         open_sound = { filename = "__base__/sound/machine-open.ogg", volume = 0.85 },
         close_sound = { filename = "__base__/sound/machine-close.ogg", volume = 0.75 },
         working_sound =
@@ -98,8 +93,25 @@ data:extend({
         fluid_boxes =
         {
             {
+                production_type = "input",
+                filter = "pollution",
+                base_area = 10,
+                base_level = -1,
+                pipe_connections= {}
+            },
+            {
+                production_type = "input",
+                filter="water",
+                pipe_picture = assembler2pipepictures(),
+                pipe_covers = pipecoverspictures(),
+                base_area = 10,
+                base_level = -1,
+                pipe_connections = {{ type="input", position = {0, -2} }}
+            },
+            {
                 production_type = "output",
-                pipe_picture = assembler3pipepictures(),
+                filter = "polluted-water",
+                pipe_picture = assembler2pipepictures(),
                 pipe_covers = pipecoverspictures(),
                 base_area = 10,
                 base_level = 1,
@@ -108,16 +120,14 @@ data:extend({
             },
             off_when_no_fluid_recipe = true
         },
-        crafting_categories = { "suck-air" },
+        crafting_categories = { "air-filtering-advanced" },
         crafting_speed = 1.0,
         energy_source =
         {
             type = "electric",
             usage_priority = "secondary-input",
-            emissions = -0.06
         },
         energy_usage = "1MW",
-        fixed_recipe = "suck-pollution",
         ingredient_count = 1,
         module_slots = 0,
         allowed_effects=nill
@@ -144,6 +154,7 @@ data:extend({
             line_length = 8,
             shift = { 0.4, -0.06 }
         },
+        match_animation_speed_to_activity = true,
         open_sound = { filename = "__base__/sound/machine-open.ogg", volume = 0.85 },
         close_sound = { filename = "__base__/sound/machine-close.ogg", volume = 0.75 },
         working_sound =
@@ -156,13 +167,15 @@ data:extend({
         {
             {
                 production_type = "input",
-                pipe_covers = pipecoverspictures(),
+                filter = "pollution",
                 base_area = 10,
                 base_level = -1,
                 pipe_connections= {}
             },
             {
                 production_type = "input",
+                filter="water",
+                pipe_picture = assembler3pipepictures(),
                 pipe_covers = pipecoverspictures(),
                 base_area = 10,
                 base_level = -1,
@@ -170,6 +183,7 @@ data:extend({
             },
             {
                 production_type = "output",
+                filter = "polluted-water",
                 pipe_picture = assembler3pipepictures(),
                 pipe_covers = pipecoverspictures(),
                 base_area = 10,
@@ -179,13 +193,12 @@ data:extend({
             },
             off_when_no_fluid_recipe = true
         },
-        crafting_categories = { "suck-air" },
-        crafting_speed = 5.0,
+        crafting_categories = { "air-filtering-advanced" },
+        crafting_speed = 1.25,
         energy_source =
         {
             type = "electric",
             usage_priority = "secondary-input",
-            emissions = -0.3
         },
         energy_usage = "1MW",
         ingredient_count = 1,

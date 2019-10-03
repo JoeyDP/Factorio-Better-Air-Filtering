@@ -1,17 +1,15 @@
 data:extend({
     {
         type = "recipe-category",
-        name = "crafting-air-filter"
+        name = "air-filtering-basic"
     },
     {
         type = "recipe-category",
-        name = "suck-air"
+        name = "air-filtering-advanced"
     },
     {
         type = "recipe",
         name = "air-filter-machine",
-        icon = "__better-air-filtering__/graphics/icons/air-filter-machine.png",
-        icon_size = 32,
         energy_required = 10.0,
         enabled = "false",
         ingredients =
@@ -25,8 +23,6 @@ data:extend({
     {
         type = "recipe",
         name = "air-filter-machine-mk2",
-        icon = "__better-air-filtering__/graphics/icons/air-filter-machine-mk2.png",
-        icon_size = 32,
         energy_required = 10.0,
         enabled = "false",
         ingredients =
@@ -39,8 +35,6 @@ data:extend({
     {
         type = "recipe",
         name = "air-filter-machine-mk3",
-        icon = "__better-air-filtering__/graphics/icons/air-filter-machine-mk3.png",
-        icon_size = 32,
         energy_required = 10.0,
         enabled = "false",
         ingredients =
@@ -52,9 +46,22 @@ data:extend({
     },
     {
         type = "recipe",
+        name = "expendable-air-filter",
+        category = "crafting",
+        subgroup = "raw-material",
+        order = "f[plastic-bar]-f[expendable-air-filter]",
+        energy_required = 2,
+        enabled = "true",
+        ingredients =
+        {
+            { "coal", 5 },
+            { "iron-plate", 2 },
+        },
+        result = "expendable-air-filter"
+    },
+    {
+        type = "recipe",
         name = "unused-air-filter",
-        icon = "__better-air-filtering__/graphics/icons/unused-air-filter.png",
-        icon_size = 32,
         category = "crafting",
         subgroup = "raw-material",
         order = "f[plastic-bar]-f[unused-air-filter]",
@@ -71,70 +78,57 @@ data:extend({
     {
         type = "recipe",
         name = "filter-air",
+        hide_from_player_crafting=true,
         icon = "__better-air-filtering__/graphics/icons/filter-air.png",
         icon_size = 32,
-        category = "crafting-air-filter",
+        category = "air-filtering-basic",
         subgroup = "raw-material",
         order = "f[plastic-bar]-f[filter-air]",
         energy_required = 0.5,
         enabled = "true",
         ingredients =
         {
-            {type="fluid", name="pollution-gas", amount=2}
+            {type="fluid", name="pollution", amount=2, fluidbox_index=1}
         },
         results = {}
     },
     {
         type = "recipe",
-        name = "suck-pollution",
-        category = "suck-air",
+        name = "filter-air2",
+        hide_from_player_crafting=true,
+        icon = "__better-air-filtering__/graphics/icons/filter-air.png",
+        icon_size = 32,
+        category = "air-filtering-advanced",
         subgroup = "raw-material",
         order = "f[plastic-bar]-f[filter-air]",
-        energy_required = 0.5,
+        energy_required = 5,
         enabled = "true",
         ingredients =
         {
+            {type="fluid", name="pollution", amount=25, fluidbox_index=1},
+            {type="item", name="unused-air-filter", amount=1},
         },
-        results = {{type="fluid", name="pollution-gas", amount=4}}
+        results = {{type="item", name="used-air-filter", amount=1}}
     },
     {
         type = "recipe",
         name = "liquid-pollution",
---        icon = "__better-air-filtering__/graphics/icons/filter-air.png",
---        icon_size = 32,
-        category = "suck-air",
+        hide_from_player_crafting=true,
+        category = "air-filtering-advanced",
         subgroup = "raw-material",
         order = "f[plastic-bar]-f[filter-air]",
         energy_required = 0.5,
         enabled = "true",
         ingredients =
         {
-            {type="fluid", name="pollution-gas", amount=6, fluidbox_index=1},
+            {type="fluid", name="pollution", amount=6, fluidbox_index=1},
             {type="fluid", name="water", amount=10, fluidbox_index=2}
         },
-        results = {{type="fluid", name="pollution", amount=10}}
+        results = {{type="fluid", name="polluted-water", amount=10}}
     },
---    {
---        type = "recipe",
---        name = "debug-pollution",
-----        icon = "__base__/graphics/icons/pollution.png",
-----        icon_size = 32,
---        category = "crafting-with-fluid",
---        subgroup = "raw-material",
---        order = "f[plastic-bar]-f[filter-air]",
---        energy_required = 1,
---        enabled = "true",
---        ingredients =
---        {
---
---        },
---        results = {{type="fluid", name="pollution-gas", amount=10}}
---    },
     {
         type = "recipe",
         name = "air-filter-recycling",
-        icon = "__better-air-filtering__/graphics/icons/air-filter-recycling.png",
-        icon_size = 32,
         category = "crafting",
         subgroup = "raw-material",
         order = "f[unused-air-filter]-f[air-filter-recycling]",

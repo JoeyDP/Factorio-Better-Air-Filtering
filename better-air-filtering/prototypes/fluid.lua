@@ -2,26 +2,26 @@ data:extend({
     {
         type = "fluid",
         name = "pollution",
-        default_temperature = 5,
-        max_temperature = 15,
-        base_color = {r=0.38, g=0.27, b=0.53},  -- 97, 69, 135
+        default_temperature = 15,
+        max_temperature = 100,
+        gas_temperature = 0,
+        base_color = {r=0.7, g=0.7, b=0.7},
         flow_color = {r=0.7, g=0.7, b=0.7},
-        icon = "__better-air-filtering__/graphics/icons/fluid/pollution.png",
+        icon = "__base__/graphics/icons/fluid/pollution.png",
         icon_size = 32,
         order = "a[fluid]-z[water]",
         auto_barrel="false"
     },
     {
         type = "fluid",
-        name = "pollution-gas",
+        name = "polluted-water",
         default_temperature = 15,
         max_temperature = 100,
-        gas_temperature = 15,
-        base_color = {r=0.38, g=0.27, b=0.53},  -- 97, 69, 135
+        base_color = {r=0.7, g=0.7, b=0.7},
         flow_color = {r=0.7, g=0.7, b=0.7},
-        icon = "__base__/graphics/icons/fluid/pollution.png",
+        icon = "__better-air-filtering__/graphics/icons/fluid/pollution.png",
         icon_size = 32,
-        order = "a[fluid]-z[water]",
+        order = "a[fluid]-z[pollution]",
         auto_barrel="false"
     }
 })
