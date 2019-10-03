@@ -42,7 +42,7 @@ data:extend({
     order = "g[plastic-bar]-h[unused-air-filter]",
     stack_size = 50,
     fuel_category = "pollution-filter",
---    burnt_result = "used-air-filter",
+    burnt_result = "used-air-filter",
     fuel_value = "300MW",
   },
   {
