@@ -1,15 +1,15 @@
 data:extend({
   {
     type = "technology",
-    name = "air-filtering",
-    icon = "__better-air-filtering__/graphics/technology/air-filtering.png",
+    name = "air-filtering-1",
+    icon = "__better-air-filtering__/graphics/technology/air-filtering-1.png",
     icon_size = "64",
     prerequisites = {"plastics", "steel-processing", "advanced-electronics"},
     effects =
     {
       {
         type = "unlock-recipe",
-        recipe = "air-filter-machine"
+        recipe = "air-filter-machine-1"
       },
       {
         type = "unlock-recipe",
@@ -33,15 +33,15 @@ data:extend({
   },
   {
     type = "technology",
-    name = "air-filtering-mk2",
-    icon = "__better-air-filtering__/graphics/technology/air-filtering-mk2.png",
+    name = "air-filtering-2",
+    icon = "__better-air-filtering__/graphics/technology/air-filtering-2.png",
     icon_size = "64",
-    prerequisites = {"air-filtering"},
+    prerequisites = {"air-filtering-1"},
     effects =
     {
       {
         type = "unlock-recipe",
-        recipe = "air-filter-machine-mk2"
+        recipe = "air-filter-machine-2"
       }
     },
     unit =
@@ -58,15 +58,15 @@ data:extend({
   },
   {
     type = "technology",
-    name = "air-filtering-mk3",
-    icon = "__better-air-filtering__/graphics/technology/air-filtering-mk3.png",
+    name = "air-filtering-3",
+    icon = "__better-air-filtering__/graphics/technology/air-filtering-3.png",
     icon_size = "64",
-    prerequisites = {"air-filtering-mk2"},
+    prerequisites = {"air-filtering-2"},
     effects =
     {
       {
         type = "unlock-recipe",
-        recipe = "air-filter-machine-mk3"
+        recipe = "air-filter-machine-3"
       }
     },
     unit =
@@ -87,7 +87,7 @@ data:extend({
     name = "air-filter-recycling",
     icon = "__better-air-filtering__/graphics/technology/air-filter-recycling.png",
     icon_size = "64",
-    prerequisites = {"air-filtering"},
+    prerequisites = {"air-filtering-1"},
     effects =
     {
       {

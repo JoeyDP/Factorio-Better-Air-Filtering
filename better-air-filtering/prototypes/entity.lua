@@ -1,11 +1,11 @@
 data:extend({
     {
         type = "assembling-machine",
-        name = "air-filter-machine",
-        icon = "__better-air-filtering__/graphics/icons/air-filter-machine.png",
+        name = "air-filter-machine-1",
+        icon = "__better-air-filtering__/graphics/icons/air-filter-machine-1.png",
         icon_size = 32,
         flags = { "placeable-neutral", "placeable-player", "player-creation" },
-        minable = { hardness = 0.2, mining_time = 0.5, result = "air-filter-machine" },
+        minable = { hardness = 0.2, mining_time = 0.5, result = "air-filter-machine-1" },
         fast_replaceable_group = "air-filter-machine",
         max_health = 150,
         corpse = "medium-remnants",
@@ -14,7 +14,7 @@ data:extend({
         selection_box = { { -1.5, -1.5 }, { 1.5, 1.5 } },
         animation =
         {
-            filename = "__better-air-filtering__/graphics/entity/air-filter-machine.png",
+            filename = "__better-air-filtering__/graphics/entity/air-filter-machine-1.png",
             priority = "high",
             width = 99,
             height = 102,
@@ -52,7 +52,7 @@ data:extend({
             fuel_inventory_size = 1,
             burnt_inventory_size = 1,
         },
-        energy_usage = "0.5MW",
+        energy_usage = "100kW",
         fixed_recipe = "filter-air",
         ingredient_count = 1,
         module_slots = 0,
@@ -60,11 +60,11 @@ data:extend({
     },
     {
         type = "assembling-machine",
-        name = "air-filter-machine-mk2",
-        icon = "__better-air-filtering__/graphics/icons/air-filter-machine-mk2.png",
+        name = "air-filter-machine-2",
+        icon = "__better-air-filtering__/graphics/icons/air-filter-machine-2.png",
         icon_size = 32,
         flags = { "placeable-neutral", "placeable-player", "player-creation" },
-        minable = { hardness = 0.2, mining_time = 0.5, result = "air-filter-machine" },
+        minable = { hardness = 0.2, mining_time = 0.5, result = "air-filter-machine-2" },
         fast_replaceable_group = "air-filter-machine",
         max_health = 150,
         corpse = "medium-remnants",
@@ -73,7 +73,7 @@ data:extend({
         selection_box = { { -1.5, -1.5 }, { 1.5, 1.5 } },
         animation =
         {
-            filename = "__better-air-filtering__/graphics/entity/air-filter-machine-mk2.png",
+            filename = "__better-air-filtering__/graphics/entity/air-filter-machine-2.png",
             priority = "high",
             width = 99,
             height = 102,
@@ -126,19 +126,20 @@ data:extend({
         {
             type = "electric",
             usage_priority = "secondary-input",
+            drain="150kW",
         },
-        energy_usage = "1MW",
+        energy_usage = "150kW",
         ingredient_count = 1,
         module_slots = 0,
         allowed_effects=nill
     },
     {
         type = "assembling-machine",
-        name = "air-filter-machine-mk3",
-        icon = "__better-air-filtering__/graphics/icons/air-filter-machine-mk3.png",
+        name = "air-filter-machine-3",
+        icon = "__better-air-filtering__/graphics/icons/air-filter-machine-3.png",
         icon_size = 32,
         flags = { "placeable-neutral", "placeable-player", "player-creation" },
-        minable = { hardness = 0.2, mining_time = 0.5, result = "air-filter-machine-mk3" },
+        minable = { hardness = 0.2, mining_time = 0.5, result = "air-filter-machine-3" },
         fast_replaceable_group = "air-filter-machine",
         max_health = 150,
         corpse = "medium-remnants",
@@ -146,7 +147,7 @@ data:extend({
         selection_box = { { -1.5, -1.5 }, { 1.5, 1.5 } },
         animation =
         {
-            filename = "__better-air-filtering__/graphics/entity/air-filter-machine-mk3.png",
+            filename = "__better-air-filtering__/graphics/entity/air-filter-machine-3.png",
             priority = "high",
             width = 99,
             height = 102,
@@ -199,10 +200,15 @@ data:extend({
         {
             type = "electric",
             usage_priority = "secondary-input",
+            drain="200kW",
         },
-        energy_usage = "1MW",
+        energy_usage = "200kW",
         ingredient_count = 1,
         module_slots = 0,
         allowed_effects=nill
+    },
+    {
+        type = "highlight-box",
+        name = "air-filter-highlight-chunk",
     }
 })

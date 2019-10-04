@@ -9,7 +9,7 @@ data:extend({
     },
     {
         type = "recipe",
-        name = "air-filter-machine",
+        name = "air-filter-machine-1",
         energy_required = 10.0,
         enabled = "false",
         ingredients =
@@ -18,31 +18,31 @@ data:extend({
             { "electronic-circuit", 5 },
             { "steel-plate", 10 }
         },
-        result = "air-filter-machine"
+        result = "air-filter-machine-1"
     },
     {
         type = "recipe",
-        name = "air-filter-machine-mk2",
+        name = "air-filter-machine-2",
         energy_required = 10.0,
         enabled = "false",
         ingredients =
         {
-            { "air-filter-machine", 2 },
+            { "air-filter-machine-1", 2 },
             { "advanced-circuit", 10 }
         },
-        result = "air-filter-machine-mk2"
+        result = "air-filter-machine-2"
     },
     {
         type = "recipe",
-        name = "air-filter-machine-mk3",
+        name = "air-filter-machine-3",
         energy_required = 10.0,
         enabled = "false",
         ingredients =
         {
-            { "air-filter-machine-mk2", 2 },
+            { "air-filter-machine-2", 2 },
             { "processing-unit", 10 }
         },
-        result = "air-filter-machine-mk3"
+        result = "air-filter-machine-3"
     },
     {
         type = "recipe",
