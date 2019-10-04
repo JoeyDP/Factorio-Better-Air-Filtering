@@ -69,7 +69,27 @@ data:extend({
         icon_size = 32,
         flags = {},
         subgroup = "raw-material",
-        order = "h[unused-air-filter]-i[used-air-filter]",
+        order = "g[plastic-bar]-i[used-air-filter]",
+        stack_size = 50
+    },
+    {
+        type = "item",
+        name = "unused-liquid-filter",
+        icon = "__better-air-filtering__/graphics/icons/unused-liquid-filter.png",
+        icon_size = 32,
+        flags = {},
+        subgroup = "raw-material",
+        order = "g[plastic-bar]-j[unused-liquid-filter]",
+        stack_size = 50
+    },
+    {
+        type = "item",
+        name = "used-liquid-filter",
+        icon = "__better-air-filtering__/graphics/icons/used-liquid-filter.png",
+        icon_size = 32,
+        flags = {},
+        subgroup = "raw-material",
+        order = "g[plastic-bar]-k[used-liquid-filter]",
         stack_size = 50
     }
 })

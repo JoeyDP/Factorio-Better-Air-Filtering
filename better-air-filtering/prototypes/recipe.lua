@@ -78,8 +78,8 @@ data:extend({
     {
         type = "recipe",
         name = "filter-air",
-        hide_from_player_crafting=true,
-        icon = "__better-air-filtering__/graphics/icons/filter-air.png",
+        hide_from_player_crafting = true,
+        icon = "__better-air-filtering__/graphics/icons/recipe/filter-air.png",
         icon_size = 32,
         category = "air-filtering-basic",
         subgroup = "raw-material",
@@ -88,15 +88,15 @@ data:extend({
         enabled = "true",
         ingredients =
         {
-            {type="fluid", name="pollution", amount=2, fluidbox_index=1}
+            { type = "fluid", name = "pollution", amount = 2, fluidbox_index = 1 }
         },
         results = {}
     },
     {
         type = "recipe",
         name = "filter-air2",
-        hide_from_player_crafting=true,
-        icon = "__better-air-filtering__/graphics/icons/filter-air.png",
+        hide_from_player_crafting = true,
+        icon = "__better-air-filtering__/graphics/icons/recipe/filter-air.png",
         icon_size = 32,
         category = "air-filtering-advanced",
         subgroup = "raw-material",
@@ -105,15 +105,15 @@ data:extend({
         enabled = "true",
         ingredients =
         {
-            {type="fluid", name="pollution", amount=25, fluidbox_index=1},
-            {type="item", name="unused-air-filter", amount=1},
+            { type = "fluid", name = "pollution", amount = 25, fluidbox_index = 1 },
+            { type = "item", name = "unused-air-filter", amount = 1 },
         },
-        results = {{type="item", name="used-air-filter", amount=1}}
+        results = { { type = "item", name = "used-air-filter", amount = 1 } }
     },
     {
         type = "recipe",
         name = "liquid-pollution",
-        hide_from_player_crafting=true,
+        hide_from_player_crafting = true,
         category = "air-filtering-advanced",
         subgroup = "raw-material",
         order = "f[plastic-bar]-f[filter-air]",
@@ -121,14 +121,25 @@ data:extend({
         enabled = "true",
         ingredients =
         {
-            {type="fluid", name="pollution", amount=6, fluidbox_index=1},
-            {type="fluid", name="water", amount=10, fluidbox_index=2}
+            { type = "fluid", name = "pollution", amount = 6, fluidbox_index = 1 },
+            { type = "fluid", name = "water", amount = 10, fluidbox_index = 2 }
         },
-        results = {{type="fluid", name="polluted-water", amount=10}}
+        results = { { type = "fluid", name = "polluted-water", amount = 10 } }
     },
     {
         type = "recipe",
         name = "air-filter-recycling",
+        icons = {
+            {
+                icon = "__better-air-filtering__/graphics/icons/used-air-filter.png"
+            },
+            {
+                icon = "__better-air-filtering__/graphics/icons/recipe/recycle.png",
+                scale = 0.6,
+                shift = { 6, 6 }
+            },
+        },
+        icon_size = 32,
         category = "crafting",
         subgroup = "raw-material",
         order = "f[unused-air-filter]-f[air-filter-recycling]",
