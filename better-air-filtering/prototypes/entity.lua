@@ -14,13 +14,30 @@ data:extend({
         selection_box = { { -1.5, -1.5 }, { 1.5, 1.5 } },
         animation =
         {
-            filename = "__better-air-filtering__/graphics/entity/air-filter-machine-1.png",
-            priority = "high",
-            width = 99,
-            height = 102,
-            frame_count = 32,
-            line_length = 8,
-            shift = { 0.4, -0.06 }
+            layers =
+            {
+                {
+                    filename = "__better-air-filtering__/graphics/entity/air-filter-machine-1.png",
+                    priority="medium",
+                    width = 108,
+                    height = 114,
+                    frame_count = 32,
+                    animation_speed=0.8,
+                    line_length = 8,
+                    shift = util.by_pixel(0, 2)
+                },
+                {
+                    filename = "__better-air-filtering__/graphics/entity/air-filter-machine-shadow.png",
+                    priority="medium",
+                    width = 95,
+                    height = 83,
+                    frame_count = 1,
+                    line_length = 1,
+                    repeat_count = 32,
+                    draw_as_shadow = true,
+                    shift = util.by_pixel(8.5, 5.5)
+                }
+            }
         },
         match_animation_speed_to_activity = true,
         open_sound = { filename = "__base__/sound/machine-open.ogg", volume = 0.85 },
@@ -66,20 +83,37 @@ data:extend({
         flags = { "placeable-neutral", "placeable-player", "player-creation" },
         minable = { hardness = 0.2, mining_time = 0.5, result = "air-filter-machine-2" },
         fast_replaceable_group = "air-filter-machine",
-        max_health = 150,
+        next_upgrade = "air-filter-machine-3",
+        max_health = 200,
         corpse = "medium-remnants",
         alert_icon_shift = util.by_pixel(-3, -12),
         collision_box = { { -1.2, -1.2 }, { 1.2, 1.2 } },
         selection_box = { { -1.5, -1.5 }, { 1.5, 1.5 } },
         animation =
         {
-            filename = "__better-air-filtering__/graphics/entity/air-filter-machine-2.png",
-            priority = "high",
-            width = 99,
-            height = 102,
-            frame_count = 32,
-            line_length = 8,
-            shift = { 0.4, -0.06 }
+            layers =
+            {
+                {
+                    filename = "__better-air-filtering__/graphics/entity/air-filter-machine-2.png",
+                    priority = "medium",
+                    width = 108,
+                    height = 110,
+                    frame_count = 32,
+                    line_length = 8,
+                    shift = util.by_pixel(0, 4),
+                },
+                {
+                    filename = "__better-air-filtering__/graphics/entity/air-filter-machine-shadow.png",
+                    priority="medium",
+                    width = 95,
+                    height = 83,
+                    frame_count = 1,
+                    line_length = 1,
+                    repeat_count = 32,
+                    draw_as_shadow = true,
+                    shift = util.by_pixel(8.5, 5.5)
+                }
+            }
         },
         match_animation_speed_to_activity = true,
         open_sound = { filename = "__base__/sound/machine-open.ogg", volume = 0.85 },
@@ -141,19 +175,35 @@ data:extend({
         flags = { "placeable-neutral", "placeable-player", "player-creation" },
         minable = { hardness = 0.2, mining_time = 0.5, result = "air-filter-machine-3" },
         fast_replaceable_group = "air-filter-machine",
-        max_health = 150,
+        max_health = 250,
         corpse = "medium-remnants",
         collision_box = { { -1.2, -1.2 }, { 1.2, 1.2 } },
         selection_box = { { -1.5, -1.5 }, { 1.5, 1.5 } },
         animation =
         {
-            filename = "__better-air-filtering__/graphics/entity/air-filter-machine-3.png",
-            priority = "high",
-            width = 99,
-            height = 102,
-            frame_count = 32,
-            line_length = 8,
-            shift = { 0.4, -0.06 }
+            layers =
+            {
+                {
+                    filename = "__better-air-filtering__/graphics/entity/air-filter-machine-3.png",
+                    priority = "medium",
+                    width = 108,
+                    height = 119,
+                    frame_count = 32,
+                    line_length = 8,
+                    shift = util.by_pixel(0, -0.5),
+                },
+                {
+                    filename = "__better-air-filtering__/graphics/entity/air-filter-machine-shadow.png",
+                    priority="medium",
+                    width = 95,
+                    height = 83,
+                    frame_count = 1,
+                    line_length = 1,
+                    repeat_count = 32,
+                    draw_as_shadow = true,
+                    shift = util.by_pixel(8.5, 5.5)
+                }
+            }
         },
         match_animation_speed_to_activity = true,
         open_sound = { filename = "__base__/sound/machine-open.ogg", volume = 0.85 },
