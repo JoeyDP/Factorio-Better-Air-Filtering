@@ -46,7 +46,7 @@ data:extend({
         order = "g[plastic-bar]-g[unused-air-filter]",
         stack_size = 10,
         fuel_category = "pollution-filter",
-        burnt_result = nill,
+        burnt_result = nil,
         fuel_value = "60MW",
     },
     {

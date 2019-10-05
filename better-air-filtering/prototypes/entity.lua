@@ -73,7 +73,7 @@ data:extend({
         fixed_recipe = "filter-air",
         ingredient_count = 1,
         module_slots = 0,
-        allowed_effects=nill
+        allowed_effects=nil
     },
     {
         type = "assembling-machine",
@@ -160,12 +160,12 @@ data:extend({
         {
             type = "electric",
             usage_priority = "secondary-input",
-            drain="150kW",
+            drain="100kW",
         },
-        energy_usage = "150kW",
+        energy_usage = "50kW",
         ingredient_count = 1,
         module_slots = 0,
-        allowed_effects=nill
+        allowed_effects=nil
     },
     {
         type = "assembling-machine",
@@ -252,10 +252,10 @@ data:extend({
             usage_priority = "secondary-input",
             drain="200kW",
         },
-        energy_usage = "200kW",
+        energy_usage = "100kW",
         ingredient_count = 1,
         module_slots = 0,
-        allowed_effects=nill
+        allowed_effects=nil
     },
     {
         type = "highlight-box",
