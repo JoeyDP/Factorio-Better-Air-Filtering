@@ -13,6 +13,10 @@ function starts_with(str, start)
     return str:sub(1, #start) == start
 end
 
+local function sign(x)
+    return x / math.abs(x)
+end
+
 function positionToChunk(position)
     return { x = math.floor(position.x / 32), y = math.floor(position.y / 32) }
 end
@@ -27,9 +31,9 @@ end
 function getBasePurificationRate(entity)
     -- Depends mostly on recipe. Should be multiplied by crafting speed to achieve actual max purification rate
     if entity.name == "air-filter-machine-1" then
-        return 4 -- 4 max pollution cleaning per second among mk1 recipes
+        return 4 * INTERVAL / 60    -- 4 max pollution cleaning per second among mk1 recipes
     elseif entity.name == "air-filter-machine-2" or entity.name == "air-filter-machine-3" then
-        return 6 -- 6 max pollution cleaning for mk2 and mk3 recipes (liquid)
+        return 6 * INTERVAL / 60    -- 6 max pollution cleaning for mk2 and mk3 recipes (liquid)
     else
         return 0
     end
@@ -85,23 +89,7 @@ end
 --  #   Update script   #
 --  #####################
 
-function insertPollution(event)
---    game.print("Filtered chunks:")
---    for _, c in pairs(global.air_filtered_chunks) do
---        game.print(c.x .. ", " .. c.y)
---    end
---
---    game.print("Chunkmap:")
---    for surface, chunkListX in pairs(global.air_filtered_chunks_map) do
---        game.print("Surface " .. surface)
---        for x, chunkListY in pairs(chunkListX) do
---            game.print("x: " .. x)
---            for y, chunk in pairs(chunkListY) do
---                game.print("y: " .. y)
---            end
---        end
---    end
-
+function absorbPollution(event)
     game.print("insertPollution")
     for _, c in pairs(global.air_filtered_chunks) do
         absorbChunk(c)
@@ -115,7 +103,7 @@ function absorbChunk(chunk)
 
     local totalAbsorption = 0.0
     for _, filter in pairs(chunk.filters) do
-        local absorptionRate = getAbsorptionRate(filter) * INTERVAL / 60
+        local absorptionRate = getAbsorptionRate(filter)
         totalAbsorption = totalAbsorption + absorptionRate
     end
 
@@ -128,7 +116,7 @@ function absorbChunk(chunk)
 
     local totalInsertedAmount = 0.0
     for _, filter in pairs(chunk.filters) do
-        local toInsert = ((getAbsorptionRate(filter) * INTERVAL / 60) / totalAbsorption) * toAbsorb
+        local toInsert = (getAbsorptionRate(filter) / totalAbsorption) * toAbsorb
         if toInsert > 0 then
             local insertedAmount = filter.insert_fluid({ name = "pollution", amount = toInsert })
             totalInsertedAmount = totalInsertedAmount + insertedAmount
@@ -140,24 +128,55 @@ function absorbChunk(chunk)
 end
 
 
-function generateRadiusUpdateFunctions(radius)
-    return {}
+local function generateSuctionFunction(dx, dy)
+
+    local function suctionUpdate(event)
+        game.print("suck pollution " .. dx .. ", " .. dy)
+--        for _, chunkTo in pairs(global.air_filtered_chunks) do
+--            local chunkFrom = getFilteredChunk(chunkTo.surface, chunkTo.x + dx, chunkTo.y + dy)
+--        end
+    end
+
+    return suctionUpdate
 end
 
 
-function generateFunctions()
+local function generateRadiusCoordinates(radius)
+    local coords = {}
+    for signR = -1, 1, 2 do
+        for signX = -1, 1, 2 do
+            for dx = -radius, radius do
+                if not (sign(signX * dx) == signR) then
+                    if not (dx == 0 and signR == -1) and not (math.abs(dx) == 3 and signR == -1) then
+                        local dy = (signR * radius) + (signX * dx)
+                        table.insert(coords, {dx=dx, dy=dy})
+                    end
+                end
+            end
+        end
+    end
+    return coords
+end
+
+local function generateRadiusSuctionFunctions(radius)
     local functions = {}
 
---    for i = 1, 110 do
---        table.insert(functions, function(event)
---        end)
---    end
---
---    table.insert(functions, init)
-    table.insert(functions, insertPollution)
+    for _, offset in pairs(generateRadiusCoordinates(radius)) do
+        local f = generateSuctionFunction(offset.dx, offset.dy)
+        table.insert(functions, f)
+    end
+
+    return functions
+end
+
+
+local function generateFunctions()
+    local functions = {}
+
+    table.insert(functions, absorbPollution)
 
     for radius = 1, 4 do
-        for _, f in pairs(generateRadiusUpdateFunctions(radius)) do
+        for _, f in pairs(generateRadiusSuctionFunctions(radius)) do
             table.insert(functions, f)
         end
     end
@@ -167,7 +186,7 @@ end
 
 
 
-function spreadOverTicks(functions, interval)
+local function spreadOverTicks(functions, interval)
     local tickMap = {}
     local funcs = {}
     for index, f in pairs(functions) do
@@ -199,7 +218,7 @@ function spreadOverTicks(functions, interval)
 end
 
 
-function FilteredChunk(surface, x, y)
+local function FilteredChunk(surface, x, y)
     local self = {
         surface = surface,
         x = x,
@@ -272,7 +291,7 @@ function FilteredChunk(surface, x, y)
     return self
 end
 
-function getFilteredChunk(surface, x, y)
+local function getFilteredChunk(surface, x, y)
     local chunkListX = global.air_filtered_chunks_map[surface.name]
     if chunkListX ~= nil then
         local chunkListY = chunkListX[x]
@@ -285,27 +304,6 @@ function getFilteredChunk(surface, x, y)
     end
     return FilteredChunk(surface, x, y)
 end
-
-
---function groupByChunk(entities)
---    local chunks = {}
---    for _, e in pairs(entities) do
---        local chunk = positionToChunk(e.position)
---        local chunkListX = chunks[chunk.x] or {}
---        local chunkList = chunkListX[chunk.y] or {}
---        table.insert(chunkList, e)
---        chunkListX[chunk.y] = chunkList
---        chunks[chunk.x] = chunkListX
---    end
---    local pretty_chunks = {}
---    for chunkX, t in pairs(chunks) do
---        for chunkY, l in pairs(t) do
---            print(t)
---            table.insert(pretty_chunks, { chunk = { x = chunkX, y = chunkY }, entities = l })
---        end
---    end
---    return pretty_chunks
---end
 
 
 
