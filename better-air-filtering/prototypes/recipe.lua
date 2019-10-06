@@ -79,7 +79,16 @@ data:extend({
         type = "recipe",
         name = "filter-air",
         hide_from_player_crafting = true,
-        icon = "__better-air-filtering__/graphics/icons/recipe/filter-air.png",
+        icons = {
+            {
+                icon = "__base__/graphics/icons/fluid/pollution.png"
+            },
+            {
+                icon = "__better-air-filtering__/graphics/icons/recipe/filter-air.png",
+                scale = 0.6,
+                shift = { 6, 6 }
+            },
+        },
         icon_size = 32,
         category = "air-filtering-basic",
         subgroup = "raw-material",
@@ -96,7 +105,16 @@ data:extend({
         type = "recipe",
         name = "filter-air2",
         hide_from_player_crafting = true,
-        icon = "__better-air-filtering__/graphics/icons/recipe/filter-air.png",
+        icons = {
+            {
+                icon = "__base__/graphics/icons/fluid/pollution.png"
+            },
+            {
+                icon = "__better-air-filtering__/graphics/icons/recipe/filter-air.png",
+                scale = 0.6,
+                shift = { 6, 6 }
+            },
+        },
         icon_size = 32,
         category = "air-filtering-advanced",
         subgroup = "raw-material",
