@@ -105,7 +105,7 @@ data:extend({
         enabled = "true",
         ingredients =
         {
-            { type = "fluid", name = "pollution", amount = 25, fluidbox_index = 1 },
+            { type = "fluid", name = "pollution", amount = 20, fluidbox_index = 1 },
             { type = "item", name = "unused-air-filter", amount = 1 },
         },
         results = { { type = "item", name = "used-air-filter", amount = 1 } }
@@ -117,7 +117,7 @@ data:extend({
         category = "air-filtering-advanced",
         subgroup = "raw-material",
         order = "f[plastic-bar]-f[filter-air]",
-        energy_required = 0.5,
+        energy_required = 1,
         enabled = "true",
         ingredients =
         {
