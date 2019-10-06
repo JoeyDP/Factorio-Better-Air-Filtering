@@ -52,7 +52,6 @@ data:extend({
         {
             {
                 production_type = "input",
-                filter = "pollution",
                 base_area = 10,
                 base_level = -1,
                 pipe_connections = {},
@@ -128,14 +127,12 @@ data:extend({
         {
             {
                 production_type = "input",
-                filter = "pollution",
                 base_area = 10,
                 base_level = -1,
                 pipe_connections= {}
             },
             {
                 production_type = "input",
-                filter="water",
                 pipe_picture = assembler2pipepictures(),
                 pipe_covers = pipecoverspictures(),
                 base_area = 10,
@@ -144,7 +141,6 @@ data:extend({
             },
             {
                 production_type = "output",
-                filter = "polluted-water",
                 pipe_picture = assembler2pipepictures(),
                 pipe_covers = pipecoverspictures(),
                 base_area = 10,
@@ -163,7 +159,7 @@ data:extend({
             drain="100kW",
         },
         energy_usage = "50kW",
-        ingredient_count = 1,
+        ingredient_count = 2,
         module_slots = 0,
         allowed_effects=nil
     },
@@ -218,14 +214,12 @@ data:extend({
         {
             {
                 production_type = "input",
-                filter = "pollution",
                 base_area = 10,
                 base_level = -1,
                 pipe_connections= {}
             },
             {
                 production_type = "input",
-                filter="water",
                 pipe_picture = assembler3pipepictures(),
                 pipe_covers = pipecoverspictures(),
                 base_area = 10,
@@ -234,7 +228,6 @@ data:extend({
             },
             {
                 production_type = "output",
-                filter = "polluted-water",
                 pipe_picture = assembler3pipepictures(),
                 pipe_covers = pipecoverspictures(),
                 base_area = 10,
@@ -253,12 +246,8 @@ data:extend({
             drain="200kW",
         },
         energy_usage = "100kW",
-        ingredient_count = 1,
+        ingredient_count = 2,
         module_slots = 0,
         allowed_effects=nil
-    },
-    {
-        type = "highlight-box",
-        name = "air-filter-highlight-chunk",
     }
 })
