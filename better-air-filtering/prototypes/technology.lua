@@ -17,7 +17,7 @@ data:extend({
       },
       {
         type = "unlock-recipe",
-        recipe = "unused-air-filter"
+        recipe = "air-filter"
       }
     },
     unit =

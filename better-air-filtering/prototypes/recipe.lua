@@ -61,10 +61,10 @@ data:extend({
     },
     {
         type = "recipe",
-        name = "unused-air-filter",
+        name = "air-filter",
         category = "crafting",
         subgroup = "raw-material",
-        order = "f[plastic-bar]-f[unused-air-filter]",
+        order = "f[plastic-bar]-f[air-filter]",
         energy_required = 5,
         enabled = "false",
         ingredients =
@@ -73,7 +73,7 @@ data:extend({
             { "plastic-bar", 4 },
             { "steel-plate", 2 }
         },
-        result = "unused-air-filter"
+        result = "air-filter"
     },
     {
         type = "recipe",
@@ -124,7 +124,7 @@ data:extend({
         ingredients =
         {
             { type = "fluid", name = "pollution", amount = 20, fluidbox_index = 1 },
-            { type = "item", name = "unused-air-filter", amount = 1 },
+            { type = "item", name = "air-filter", amount = 1 },
         },
         results = { { type = "item", name = "used-air-filter", amount = 1 } }
     },
@@ -149,7 +149,10 @@ data:extend({
         name = "air-filter-recycling",
         icons = {
             {
-                icon = "__better-air-filtering__/graphics/icons/used-air-filter.png"
+                icon = "__better-air-filtering__/graphics/icons/air-filter.png"
+            },
+            {
+                icon = "__better-air-filtering__/graphics/icons/used-air-filter-mask.png",
             },
             {
                 icon = "__better-air-filtering__/graphics/icons/recipe/recycle.png",
@@ -160,7 +163,7 @@ data:extend({
         icon_size = 32,
         category = "crafting",
         subgroup = "raw-material",
-        order = "f[unused-air-filter]-f[air-filter-recycling]",
+        order = "f[air-filter]-f[air-filter-recycling]",
         energy_required = 5,
         enabled = "false",
         ingredients =
@@ -168,6 +171,6 @@ data:extend({
             { "used-air-filter", 1 },
             { "coal", 5 }
         },
-        result = "unused-air-filter"
+        result = "air-filter"
     }
 })

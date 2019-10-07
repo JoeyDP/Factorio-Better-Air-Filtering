@@ -51,8 +51,8 @@ data:extend({
     },
     {
         type = "item",
-        name = "unused-air-filter",
-        icon = "__better-air-filtering__/graphics/icons/unused-air-filter.png",
+        name = "air-filter",
+        icon = "__better-air-filtering__/graphics/icons/air-filter.png",
         icon_size = 32,
         flags = {},
         subgroup = "raw-material",
@@ -65,7 +65,14 @@ data:extend({
     {
         type = "item",
         name = "used-air-filter",
-        icon = "__better-air-filtering__/graphics/icons/used-air-filter.png",
+        icons = {
+            {
+                icon = "__better-air-filtering__/graphics/icons/air-filter.png"
+            },
+            {
+                icon = "__better-air-filtering__/graphics/icons/used-air-filter-mask.png",
+            },
+        },
         icon_size = 32,
         flags = {},
         subgroup = "raw-material",
@@ -74,8 +81,8 @@ data:extend({
     },
     {
         type = "item",
-        name = "unused-liquid-filter",
-        icon = "__better-air-filtering__/graphics/icons/unused-liquid-filter.png",
+        name = "liquid-filter",
+        icon = "__better-air-filtering__/graphics/icons/liquid-filter.png",
         icon_size = 32,
         flags = {},
         subgroup = "raw-material",
@@ -85,7 +92,14 @@ data:extend({
     {
         type = "item",
         name = "used-liquid-filter",
-        icon = "__better-air-filtering__/graphics/icons/used-liquid-filter.png",
+        icons = {
+            {
+                icon = "__better-air-filtering__/graphics/icons/liquid-filter.png"
+            },
+            {
+                icon = "__better-air-filtering__/graphics/icons/used-liquid-filter-mask.png",
+            },
+        },
         icon_size = 32,
         flags = {},
         subgroup = "raw-material",
