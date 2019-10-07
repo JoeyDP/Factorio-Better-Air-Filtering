@@ -2,7 +2,15 @@
 --  #   Constants   #
 --  #################
 
-local INTERVAL = 30
+local INTERVAL = 20
+
+
+
+--  #####################
+--  #   Local handles   #
+--  #####################
+
+local air_filtered_chunks = {}
 
 
 --  #################
@@ -14,7 +22,16 @@ function starts_with(str, start)
 end
 
 local function sign(x)
-    return x / math.abs(x)
+    if x == 0 then
+        return 1
+    else
+        return x / math.abs(x)
+    end
+end
+
+local function manhattan(x, y)
+    -- Manhattan distance from origin to xy.
+    return math.abs(x) + math.abs(y)
 end
 
 local function positionToChunk(position)
@@ -86,10 +103,6 @@ local function inRadius(filter, radius)
     end
 end
 
-local function manhattan(x, y)
-    -- Manhattan distance from origin to xy.
-    return math.abs(x) + math.abs(y)
-end
 
 --  #####################
 --  #   Update script   #
@@ -97,7 +110,7 @@ end
 
 function absorbPollution(event)
 --    game.print("insertPollution")
-    for _, c in pairs(global.air_filtered_chunks) do
+    for _, c in pairs(air_filtered_chunks) do
         absorbChunk(c)
     end
 end
@@ -127,30 +140,61 @@ function absorbChunk(chunk)
             totalInsertedAmount = totalInsertedAmount + insertedAmount
         end
     end
---    game.print("Total inserted: " .. totalInsertedAmount)
-    assert(math.abs(toAbsorb - totalInsertedAmount) < 0.01, "Error with inserting pollution in air filter machine. Different amounts absorbed/inserted: " .. toAbsorb .. " absorbed and " .. totalInsertedAmount .. " inserted.")
     chunk:pollute(-totalInsertedAmount)
+    --    game.print("Total inserted: " .. totalInsertedAmount)
+    if math.abs(toAbsorb - totalInsertedAmount) > 0.01 then
+            game.print("Error with inserting pollution in air filter machine. Different amounts absorbed/inserted: " .. toAbsorb .. " absorbed and " .. totalInsertedAmount .. " inserted.")
+    end
+end
+
+local function stepsToOrigin(x, y)
+    -- Provide coordinates of possible 1-steps toward (0, 0)
+    local steps = {}
+    if x ~= 0 then
+        table.insert(steps, {x=x - sign(x), y=y})
+    end
+    if y ~= 0 then
+        table.insert(steps, {x=x, y=y - sign(y)})
+    end
+    return steps
 end
 
 local function suctionUpdateChunk(chunkTo, dx, dy)
---    local totalSuction = chunkTo:getTotalSuctionRate(manhattan(dx, dy))
+    local totalSuction = chunkTo:getTotalSuctionRate(manhattan(dx, dy))
 
---    if totalSuction == 0 then
---        return
---    end
+    if totalSuction == 0 then
+        return
+    end
 
+--    game.print("From " .. dx .. ", " .. dy)
 --    game.print("suction: " .. totalSuction)
 
+    local chunkFrom = getFilteredChunk(chunkTo.surface, chunkTo.x + dx, chunkTo.y + dy)
+    local test = chunkFrom:getTotalSuctionRate(0)
+    local pollution = chunkFrom:get_pollution()
+    if pollution > 0 then
+        local toPollute = math.min(pollution, totalSuction)
+        local chunksVia = {}
+        for _, step in pairs(stepsToOrigin(dx, dy)) do
+            local chunk = getFilteredChunk(chunkTo.surface, chunkTo.x + step.x, chunkTo.y + step.y)
+            table.insert(chunksVia, chunk)
+        end
 
---    local chunkFrom = getFilteredChunk(chunkTo.surface, chunkTo.x + dx, chunkTo.y + dy)
-
+--        game.print("Moving " .. toPollute .. " pollution")
+--        game.print("From: " .. chunkFrom.x .. ", " .. chunkFrom.y)
+        for _, chunkVia in pairs(chunksVia) do
+--            game.print("To: " .. chunkVia.x .. ", " .. chunkVia.y)
+            chunkVia:pollute(toPollute / #chunksVia)
+        end
+        chunkFrom:pollute(-toPollute)
+    end
 end
 
 local function generateSuctionFunction(dx, dy)
 
     local function suctionUpdate(event)
 --        game.print("suck pollution " .. dx .. ", " .. dy)
-        for _, chunkTo in pairs(global.air_filtered_chunks) do
+        for _, chunkTo in pairs(air_filtered_chunks) do
             suctionUpdateChunk(chunkTo, dx, dy)
         end
     end
@@ -164,8 +208,8 @@ local function generateRadiusCoordinates(radius)
     for signR = -1, 1, 2 do
         for signX = -1, 1, 2 do
             for dx = -radius, radius do
-                if not (sign(signX * dx) == signR) then
-                    if not (dx == 0 and signR == -1) and not (math.abs(dx) == 3 and signR == -1) then
+                if not (sign(signX) * sign(dx) == signR) then
+                    if not (math.abs(dx) == radius and signR == 1) then
                         local dy = (signR * radius) + (signX * dx)
                         table.insert(coords, {dx=dx, dy=dy})
                     end
@@ -190,9 +234,6 @@ end
 
 local function generateFunctions()
     local functions = {}
-
-    -- Debug statement
---    table.insert(functions, init)
 
     table.insert(functions, absorbPollution)
 
@@ -226,13 +267,15 @@ local function spreadOverTicks(functions, interval)
 
     local function onTick(event)
         local step = (event.tick % interval) + 1
-        --        game.print("Step: " .. step)
         local funcs = tickMap[step]
         if funcs ~= nil then
             for _, f in pairs(funcs) do
                 f(event)
             end
         end
+--        if step == 1 then
+--            game.print("================================")
+--        end
     end
 
     return onTick
@@ -243,23 +286,6 @@ end
 --  #   FilteredChunk   #
 --  #####################
 
---local function FilteredChunk(surface, x, y)
---    local self = {
---        surface = surface,
---        x = x,
---        y = y,
---        filters = {},
---    }
---
-----    self.getTotalSuctionRate = getTotalSuctionRate
-----    self.getTotalAbsorptionRate = getTotalAbsorptionRate
-----    self.get_pollution = get_pollution
-----    self.pollute = pollute
-----    self.toPosition = toPosition
-----    self.addFilter = addFilter
-----    self.removeFilter = removeFilter
---    return self
---end
 
 local FilteredChunk = {
     surface = nil,
@@ -267,6 +293,22 @@ local FilteredChunk = {
     y = 0,
     filters = {},
 }
+
+function FilteredChunk:new (o)
+    o = o or {}
+    setmetatable(o, self)
+    self.__index = self
+    return o
+end
+
+function createFilteredChunk(surface, x, y)
+    local chunk = FilteredChunk:new(nil)
+    chunk.surface = surface
+    chunk.x = x
+    chunk.y = y
+    chunk.filters = {}      -- this statement, though it appears to have no effect, has a large impact on the saving of global state.
+    return chunk
+end
 
 function FilteredChunk:equal(other)
     return self.surface.name == other.surface.name and self.x == other.x and self.y == other.y
@@ -280,15 +322,15 @@ function FilteredChunk:addToMap()
     chunkListY[self.y] = self
     chunkListX[self.x] = chunkListY
     global.air_filtered_chunks_map[self.surface.name] = chunkListX
-    table.insert(global.air_filtered_chunks, self)
+    table.insert(air_filtered_chunks, self)
 end
 
 function FilteredChunk:removeFromMap()
     game.print("Removing chunk from map")
     table.remove(global.air_filtered_chunks_map[self.surface.name][self.x], self.y)
-    for i, c in pairs(global.air_filtered_chunks) do
+    for i, c in pairs(air_filtered_chunks) do
         if self:equal(c) then
-            table.remove(global.air_filtered_chunks, i)
+            table.remove(air_filtered_chunks, i)
             game.print("Removing chunk from list")
             break
         end
@@ -312,7 +354,7 @@ function FilteredChunk:getTotalSuctionRate(distance)
             totalSuctionRate = totalSuctionRate + suctionRate
         end
     end
-    return totalSuctionRate
+    return totalSuctionRate * (1/4) ^ distance
 end
 
 function FilteredChunk:get_pollution()
@@ -344,22 +386,6 @@ function FilteredChunk:removeFilter(filter)
     if #self.filters == 0 then
         self:removeFromMap()
     end
-end
-
-function FilteredChunk:new (o)
-    o = o or {}
-    setmetatable(o, self)
-    self.__index = self
-    return o
-end
-
-function createFilteredChunk(surface, x, y)
-    local chunk = FilteredChunk:new(nil)
-    chunk.surface = surface
-    chunk.x = x
-    chunk.y = y
-    chunk.filters = {}      -- this statement, though it appears to have no effect, has a large impact on the saving of global state.
-    return chunk
 end
 
 function getFilteredChunk(surface, x, y)
@@ -407,16 +433,19 @@ script.on_event({ defines.events.on_pre_player_mined_item, defines.events.on_rob
 
 
 function refreshMetatables()
-    for i, chunk in pairs(global.air_filtered_chunks) do
-        FilteredChunk:new(chunk)    -- reset metatable
+    for _, chunkListX in pairs(global.air_filtered_chunks_map) do
+        for x, chunkListY in pairs(chunkListX) do
+            for y, chunk in pairs(chunkListY) do
+                chunk = FilteredChunk:new(chunk)    -- resets metatable
+                table.insert(air_filtered_chunks, chunk)
+            end
+        end
     end
 end
 
 function init()
-    game.print("Init")
     -- gather all filters on every surface
     global.air_filtered_chunks_map = {}
-    global.air_filtered_chunks = {}
     for _, surface in pairs(game.surfaces) do
         local filters = surface.find_entities_filtered {
             name = { "air-filter-machine-1", "air-filter-machine-2", "air-filter-machine-3" }
@@ -427,18 +456,24 @@ function init()
             chunk:addFilter(filter)
         end
     end
+
+    load()
 end
 
-script.on_init(init)
-script.on_configuration_changed(init)
-
-script.on_load(function()
+function load()
     refreshMetatables()
 
     local functions = generateFunctions()
     local onTick = spreadOverTicks(functions, INTERVAL)
 
     script.on_event(defines.events.on_tick, onTick)
-end)
+end
+
+script.on_load(load)
+script.on_init(init)
+script.on_configuration_changed(init)
+
+
+
 
 

@@ -10,5 +10,5 @@
     "base >= 0.17",
     "!air-filtering"
   ],
-  "description": "An extension to the air filtering mod by Schorty."
+  "description": "An overhaul of the air filtering mod by Schorty."
 }
