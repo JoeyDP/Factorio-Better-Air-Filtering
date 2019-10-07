@@ -93,7 +93,7 @@ data:extend({
         category = "air-filtering-basic",
         subgroup = "raw-material",
         order = "f[plastic-bar]-f[filter-air]",
-        energy_required = 0.5,
+        energy_required = 1,
         enabled = "true",
         ingredients =
         {

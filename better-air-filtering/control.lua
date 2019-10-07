@@ -31,9 +31,9 @@ end
 function getBasePurificationRate(entity)
     -- Depends mostly on recipe (optimal recipe used per machine). Should be multiplied by crafting speed to achieve actual max purification rate
     if entity.name == "air-filter-machine-1" then
-        return 4 * INTERVAL / 60    -- 4 max pollution cleaning per second among mk1 recipes
+        return 2 * INTERVAL / 60    -- max pollution cleaning per second among mk1 recipes
     elseif entity.name == "air-filter-machine-2" or entity.name == "air-filter-machine-3" then
-        return 6 * INTERVAL / 60    -- 6 max pollution cleaning for mk2 and mk3 recipes (liquid)
+        return 6 * INTERVAL / 60    -- max pollution cleaning for mk2 and mk3 recipes (liquid)
     else
         return 0
     end
@@ -110,14 +110,14 @@ function absorbChunk(chunk)
     local totalAbsorptionRate = chunk:getTotalAbsorptionRate()
 
 --    game.print("totalAbsorptionRate: " .. totalAbsorptionRate)
-    game.print("filter count: " .. #chunk.filters)
+--    game.print("filter count: " .. #chunk.filters)
 
     if totalAbsorptionRate == 0 then
         return
     end
 
     local toAbsorb = math.min(chunk:get_pollution() , totalAbsorptionRate)
-        game.print("To absorb: " .. toAbsorb)
+--    game.print("To absorb: " .. toAbsorb)
 
     local totalInsertedAmount = 0.0
     for _, filter in pairs(chunk.filters) do
@@ -127,7 +127,7 @@ function absorbChunk(chunk)
             totalInsertedAmount = totalInsertedAmount + insertedAmount
         end
     end
-        game.print("Total inserted: " .. totalInsertedAmount)
+--    game.print("Total inserted: " .. totalInsertedAmount)
     assert(math.abs(toAbsorb - totalInsertedAmount) < 0.01, "Error with inserting pollution in air filter machine. Different amounts absorbed/inserted: " .. toAbsorb .. " absorbed and " .. totalInsertedAmount .. " inserted.")
     chunk:pollute(-totalInsertedAmount)
 end
@@ -422,10 +422,8 @@ function init()
             name = { "air-filter-machine-1", "air-filter-machine-2", "air-filter-machine-3" }
         }
         for _, filter in pairs(filters) do
-            game.print(#filters)
             local chunkPos = positionToChunk(filter.position)
             local chunk = getFilteredChunk(surface, chunkPos.x, chunkPos.y)
-            game.print("Chunk: " .. chunk.x .. ", " .. chunk.y)
             chunk:addFilter(filter)
         end
     end
