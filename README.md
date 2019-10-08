@@ -3,7 +3,7 @@
 
 
 ## Overview
-![overview]()
+![overview](https://github.com/JoeyDP/Factorio-Better-Air-Filtering/blob/master/res/overview.png?raw=true)
 
 This mod features three tiers of air filtering machines. These machines remove pollution from the air in their region by using air filters. Each consecutive tier has a larger radius and stronger filtering effect. Keep in mind that you will still need filters spread around your base at strategic locations to effectively counteract the spread of pollution.  
 
@@ -13,7 +13,7 @@ You start with a basic passive air filter machine that cleans the air in its own
 #### Air filter machine 2
 The upgraded version has a stronger filtering effect. In addition, by using a moderate amount of electricity this machine is able to pull in pollution from neighboring chunks in the shape of a diamond. This version has a radius of two chunks (in [manhattan distance](https://en.wikipedia.org/wiki/Taxicab_geometry)). Note that a continuous amount of energy is consumed for this suction effect in addition to the cost of filtering the air.
 
-![range_mark_2](res/radius_mk2.png)
+![range_mark_2](https://github.com/JoeyDP/Factorio-Better-Air-Filtering/blob/master/res/radius_mk2.png?raw=true)
 
 #### Air filter machine 3
 The third and final upgrade of the air filtering machine features a larger radius of three chunks along with more air filtering per second.
