@@ -21,7 +21,7 @@ function starts_with(str, start)
     return str:sub(1, #start) == start
 end
 
-local function sign(x)
+function sign(x)
     if x == 0 then
         return 1
     else
@@ -29,12 +29,12 @@ local function sign(x)
     end
 end
 
-local function manhattan(x, y)
+function manhattan(x, y)
     -- Manhattan distance from origin to xy.
     return math.abs(x) + math.abs(y)
 end
 
-local function positionToChunk(position)
+function positionToChunk(position)
     return { x = math.floor(position.x / 32), y = math.floor(position.y / 32) }
 end
 
@@ -77,6 +77,9 @@ function getAbsorptionRate(entity)
     return math.min(getSpaceForPollution(entity), getSuctionRate(entity))
 end
 
+function pollutionInPollutedWater(amount)
+    return amount * 6 / 10
+end
 
 function getSpaceForPollution(entity)
     if #entity.fluidbox < 1 then
@@ -91,7 +94,7 @@ function getSpaceForPollution(entity)
     return capacity - pollution
 end
 
-local function inRadius(filter, radius)
+function inRadius(filter, radius)
     if filter.name == "air-filter-machine-1" then
         return radius <= 0
     elseif filter.name == "air-filter-machine-2" then
@@ -109,7 +112,7 @@ end
 --  #####################
 
 function absorbPollution(event)
---    game.print("insertPollution")
+    --    game.print("insertPollution")
     for _, c in pairs(air_filtered_chunks) do
         absorbChunk(c)
     end
@@ -122,15 +125,15 @@ function absorbChunk(chunk)
 
     local totalAbsorptionRate = chunk:getTotalAbsorptionRate()
 
---    game.print("totalAbsorptionRate: " .. totalAbsorptionRate)
---    game.print("filter count: " .. #chunk.filters)
+    --    game.print("totalAbsorptionRate: " .. totalAbsorptionRate)
+    --    game.print("filter count: " .. #chunk.filters)
 
     if totalAbsorptionRate == 0 then
         return
     end
 
-    local toAbsorb = math.min(chunk:get_pollution() , totalAbsorptionRate)
---    game.print("To absorb: " .. toAbsorb)
+    local toAbsorb = math.min(chunk:get_pollution(), totalAbsorptionRate)
+    --    game.print("To absorb: " .. toAbsorb)
 
     local totalInsertedAmount = 0.0
     for _, filter in pairs(chunk.filters) do
@@ -143,31 +146,31 @@ function absorbChunk(chunk)
     chunk:pollute(-totalInsertedAmount)
     --    game.print("Total inserted: " .. totalInsertedAmount)
     if math.abs(toAbsorb - totalInsertedAmount) > 0.01 then
-            game.print("Error with inserting pollution in air filter machine. Different amounts absorbed/inserted: " .. toAbsorb .. " absorbed and " .. totalInsertedAmount .. " inserted.")
+        game.print("Error with inserting pollution in air filter machine. Different amounts absorbed/inserted: " .. toAbsorb .. " absorbed and " .. totalInsertedAmount .. " inserted.")
     end
 end
 
-local function stepsToOrigin(x, y)
+function stepsToOrigin(x, y)
     -- Provide coordinates of possible 1-steps toward (0, 0)
     local steps = {}
     if x ~= 0 then
-        table.insert(steps, {x=x - sign(x), y=y})
+        table.insert(steps, { x = x - sign(x), y = y })
     end
     if y ~= 0 then
-        table.insert(steps, {x=x, y=y - sign(y)})
+        table.insert(steps, { x = x, y = y - sign(y) })
     end
     return steps
 end
 
-local function suctionUpdateChunk(chunkTo, dx, dy)
+function suctionUpdateChunk(chunkTo, dx, dy)
     local totalSuction = chunkTo:getTotalSuctionRate(manhattan(dx, dy))
 
     if totalSuction == 0 then
         return
     end
 
---    game.print("From " .. dx .. ", " .. dy)
---    game.print("suction: " .. totalSuction)
+    --    game.print("From " .. dx .. ", " .. dy)
+    --    game.print("suction: " .. totalSuction)
 
     local chunkFrom = getFilteredChunk(chunkTo.surface, chunkTo.x + dx, chunkTo.y + dy)
     local test = chunkFrom:getTotalSuctionRate(0)
@@ -180,20 +183,20 @@ local function suctionUpdateChunk(chunkTo, dx, dy)
             table.insert(chunksVia, chunk)
         end
 
---        game.print("Moving " .. toPollute .. " pollution")
---        game.print("From: " .. chunkFrom.x .. ", " .. chunkFrom.y)
+        --        game.print("Moving " .. toPollute .. " pollution")
+        --        game.print("From: " .. chunkFrom.x .. ", " .. chunkFrom.y)
         for _, chunkVia in pairs(chunksVia) do
---            game.print("To: " .. chunkVia.x .. ", " .. chunkVia.y)
+            --            game.print("To: " .. chunkVia.x .. ", " .. chunkVia.y)
             chunkVia:pollute(toPollute / #chunksVia)
         end
         chunkFrom:pollute(-toPollute)
     end
 end
 
-local function generateSuctionFunction(dx, dy)
+function generateSuctionFunction(dx, dy)
 
     local function suctionUpdate(event)
---        game.print("suck pollution " .. dx .. ", " .. dy)
+        --        game.print("suck pollution " .. dx .. ", " .. dy)
         for _, chunkTo in pairs(air_filtered_chunks) do
             suctionUpdateChunk(chunkTo, dx, dy)
         end
@@ -202,8 +205,7 @@ local function generateSuctionFunction(dx, dy)
     return suctionUpdate
 end
 
-
-local function generateRadiusCoordinates(radius)
+function generateRadiusCoordinates(radius)
     local coords = {}
     for signR = -1, 1, 2 do
         for signX = -1, 1, 2 do
@@ -211,7 +213,7 @@ local function generateRadiusCoordinates(radius)
                 if not (sign(signX) * sign(dx) == signR) then
                     if not (math.abs(dx) == radius and signR == 1) then
                         local dy = (signR * radius) + (signX * dx)
-                        table.insert(coords, {dx=dx, dy=dy})
+                        table.insert(coords, { dx = dx, dy = dy })
                     end
                 end
             end
@@ -220,7 +222,7 @@ local function generateRadiusCoordinates(radius)
     return coords
 end
 
-local function generateRadiusSuctionFunctions(radius)
+function generateRadiusSuctionFunctions(radius)
     local functions = {}
 
     for _, offset in pairs(generateRadiusCoordinates(radius)) do
@@ -231,8 +233,7 @@ local function generateRadiusSuctionFunctions(radius)
     return functions
 end
 
-
-local function generateFunctions()
+function generateFunctions()
     local functions = {}
 
     table.insert(functions, absorbPollution)
@@ -246,9 +247,7 @@ local function generateFunctions()
     return functions
 end
 
-
-
-local function spreadOverTicks(functions, interval)
+function spreadOverTicks(functions, interval)
     local tickMap = {}
     local funcs = {}
     for index, f in pairs(functions) do
@@ -273,9 +272,9 @@ local function spreadOverTicks(functions, interval)
                 f(event)
             end
         end
---        if step == 1 then
---            game.print("================================")
---        end
+        --        if step == 1 then
+        --            game.print("================================")
+        --        end
     end
 
     return onTick
@@ -354,7 +353,7 @@ function FilteredChunk:getTotalSuctionRate(distance)
             totalSuctionRate = totalSuctionRate + suctionRate
         end
     end
-    return totalSuctionRate * (1/4) ^ distance
+    return totalSuctionRate * (1 / 4) ^ distance
 end
 
 function FilteredChunk:get_pollution()
@@ -412,7 +411,7 @@ function isAirFilterMachine(entity)
     return starts_with(entity.name, "air-filter-machine-")
 end
 
-function OnEntityCreated(event)
+function onEntityCreated(event)
     if isAirFilterMachine(event.created_entity) then
         local chunkPos = positionToChunk(event.created_entity.position)
         local chunk = getFilteredChunk(event.created_entity.surface, chunkPos.x, chunkPos.y)
@@ -420,17 +419,78 @@ function OnEntityCreated(event)
     end
 end
 
-function OnEntityRemoved(event)
+function onEntityRemoved(event)
+    -- Update map of air filters
     if isAirFilterMachine(event.entity) then
         local chunkPos = positionToChunk(event.entity.position)
         local chunk = getFilteredChunk(event.entity.surface, chunkPos.x, chunkPos.y)
         chunk:removeFilter(event.entity)
     end
+
+    -- Disperse pollution back
+    local pollution = 0
+
+    -- from pollution (fluid)
+    pollution = pollution + event.entity.get_fluid_count("pollution")
+
+    -- from polluted water (fluid)
+    local pollutedWater = event.entity.get_fluid_count("polluted-water")
+    pollution = pollution + pollutionInPollutedWater(pollutedWater)
+
+    -- from current crafting op
+    --local crafting = "No"
+    --if event.entity.is_crafting() then crafting = "Yes" end
+    --game.print("crafting? " .. crafting)
+    --local recipe = event.entity.get_recipe()
+    --if recipe ~= nil and event.entity.is_crafting() then
+    --    for _, ingredient in pairs(recipe.ingredients) do
+    --        game.print("Ingredient: " .. ingredient.name)
+    --        if ingredient.name == "pollution" then
+    --            pollution = pollution + ingredient.amount
+    --        elseif ingredient.name == "polluted-water" then
+    --            pollution = pollution + pollutionInPollutedWater(ingredient.amount)
+    --        end
+    --    end
+    --end
+
+    if pollution > 0 then
+        game.print("Dispersing " .. pollution .. " pollution back")
+        event.entity.surface.pollute(event.entity.position, pollution)
+    end
+
+    -- TODO disperse contents when recipe changes
 end
 
-script.on_event({ defines.events.on_built_entity, defines.events.on_robot_built_entity }, OnEntityCreated)
-script.on_event({ defines.events.on_pre_player_mined_item, defines.events.on_robot_pre_mined, defines.events.on_entity_died }, OnEntityRemoved)
+function preEntityRemoved(event)
+    local isCrafting = event.entity.type == "assembling-machine" and event.entity.is_crafting()
 
+    -- disperse pollution in recipe back
+    if isCrafting then
+        local pollution = 0
+        local recipe = event.entity.get_recipe()
+
+        if recipe ~= nil then
+            for _, ingredient in pairs(recipe.ingredients) do
+                game.print("Ingredient: " .. ingredient.name)
+                if ingredient.name == "pollution" then
+                    pollution = pollution + ingredient.amount
+                elseif ingredient.name == "polluted-water" then
+                    pollution = pollution + pollutionInPollutedWater(ingredient.amount)
+                end
+            end
+        end
+
+        if pollution > 0 then
+            game.print("Dispersing " .. pollution .. " pollution back")
+            event.entity.surface.pollute(event.entity.position, pollution)
+        end
+    end
+
+    -- On entity died has no pre version -> call onEntityRemoved manually
+    if event.name == defines.events.on_entity_died then
+        onEntityRemoved(event)
+    end
+end
 
 function refreshMetatables()
     for _, chunkListX in pairs(global.air_filtered_chunks_map) do
@@ -456,18 +516,24 @@ function init()
             chunk:addFilter(filter)
         end
     end
-
-    load()
 end
 
 function load()
     refreshMetatables()
-
-    local functions = generateFunctions()
-    local onTick = spreadOverTicks(functions, INTERVAL)
-
-    script.on_event(defines.events.on_tick, onTick)
 end
+
+
+-- Set up callbacks
+
+script.on_event({ defines.events.on_built_entity, defines.events.on_robot_built_entity }, onEntityCreated)
+
+-- on_entity_died should trigger both functions -> called manually
+script.on_event({ defines.events.on_player_mined_entity, defines.events.on_robot_mined_entity, defines.events.on_entity_died }, onEntityRemoved)
+script.on_event({ defines.events.on_pre_player_mined_item, defines.events.on_pre_robot_mined_item, defines.events.on_entity_died }, preEntityRemoved)
+
+local functions = generateFunctions()
+local onTick = spreadOverTicks(functions, INTERVAL)
+script.on_event(defines.events.on_tick, onTick)
 
 script.on_load(load)
 script.on_init(init)

@@ -71,6 +71,7 @@ data:extend({
         energy_usage = "100kW",
         fixed_recipe = "filter-air",
         ingredient_count = 1,
+        return_ingredients_on_change = true,
         module_slots = 0,
         allowed_effects=nil
     },
@@ -160,6 +161,7 @@ data:extend({
         },
         energy_usage = "50kW",
         ingredient_count = 2,
+        return_ingredients_on_change = true,
         module_slots = 0,
         allowed_effects=nil
     },
@@ -247,6 +249,7 @@ data:extend({
         },
         energy_usage = "100kW",
         ingredient_count = 2,
+        return_ingredients_on_change = true,
         module_slots = 0,
         allowed_effects=nil
     }
