@@ -177,9 +177,6 @@ function absorbChunk(chunk)
 
     local totalInsertedAmount = 0.0
     for _, filter in pairs(chunk.filters) do
-
-        local test = filter.get_output_inventory().insert({name="used-air-filter", count=1})
-        game.print("Inserted " .. test .. " items in output")
         local toInsert = (getAbsorptionRate(filter) / totalAbsorptionRate) * toAbsorb
         if toInsert > 0 then
             local insertedAmount = filter.insert_fluid({ name = "pollution", amount = toInsert })
