@@ -50,7 +50,7 @@ function getBasePurificationRate(entity)
     if entity.name == "air-filter-machine-1" then
         return 2 * INTERVAL / 60    -- max pollution cleaning per second among mk1 recipes
     elseif entity.name == "air-filter-machine-2" or entity.name == "air-filter-machine-3" then
-        return 6 * INTERVAL / 60    -- max pollution cleaning for mk2 and mk3 recipes (liquid)
+        return 4 * INTERVAL / 60    -- max pollution cleaning for mk2 and mk3 recipes TODO: change if fluid filtering is implemented
     else
         return 0
     end
@@ -314,7 +314,7 @@ function FilteredChunk:equal(other)
 end
 
 function FilteredChunk:addToMap()
-    game.print("Adding chunk to map")
+    --game.print("Adding chunk to map")
     local chunkListX = global.air_filtered_chunks_map[self.surface.name] or {}
     local chunkListY = chunkListX[self.x] or {}
     assert(chunkListY[y] == nil, "Chunklist entry should not exist yet.")
@@ -325,12 +325,12 @@ function FilteredChunk:addToMap()
 end
 
 function FilteredChunk:removeFromMap()
-    game.print("Removing chunk from map")
+    --game.print("Removing chunk from map")
     table.remove(global.air_filtered_chunks_map[self.surface.name][self.x], self.y)
     for i, c in pairs(air_filtered_chunks) do
         if self:equal(c) then
             table.remove(air_filtered_chunks, i)
-            game.print("Removing chunk from list")
+            --game.print("Removing chunk from list")
             break
         end
     end
@@ -454,7 +454,7 @@ function onEntityRemoved(event)
     --end
 
     if pollution > 0 then
-        game.print("Dispersing " .. pollution .. " pollution back")
+        --game.print("Dispersing " .. pollution .. " pollution back")
         event.entity.surface.pollute(event.entity.position, pollution)
     end
 end
@@ -469,7 +469,6 @@ function preEntityRemoved(event)
 
         if recipe ~= nil then
             for _, ingredient in pairs(recipe.ingredients) do
-                game.print("Ingredient: " .. ingredient.name)
                 if ingredient.name == "pollution" then
                     pollution = pollution + ingredient.amount
                 elseif ingredient.name == "polluted-water" then
@@ -479,7 +478,7 @@ function preEntityRemoved(event)
         end
 
         if pollution > 0 then
-            game.print("Dispersing " .. pollution .. " pollution back")
+            --game.print("Dispersing " .. pollution .. " pollution back")
             event.entity.surface.pollute(event.entity.position, pollution)
         end
     end

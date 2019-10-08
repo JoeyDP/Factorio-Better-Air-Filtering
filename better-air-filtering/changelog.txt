@@ -1,0 +1,9 @@
+---------------------------------------------------------------------------------------------------
+Version: 0.1.0
+Date: 2019.10.08
+  Info:
+    - Initial release
+  Locale:
+    - Only English
+  License:
+    - Using MIT License.
