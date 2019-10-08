@@ -14,9 +14,8 @@ data:extend({
         enabled = false,
         ingredients =
         {
-            { "assembling-machine-2", 1 },
-            { "electronic-circuit", 5 },
-            { "steel-plate", 10 }
+            { "assembling-machine-1", 1 },
+            { "electronic-circuit", 5 }
         },
         result = "air-filter-machine-1"
     },
@@ -28,6 +27,7 @@ data:extend({
         ingredients =
         {
             { "air-filter-machine-1", 2 },
+            { "steel-plate", 10 },
             { "advanced-circuit", 10 }
         },
         result = "air-filter-machine-2"
@@ -49,9 +49,9 @@ data:extend({
         name = "expendable-air-filter",
         category = "crafting",
         subgroup = "raw-material",
-        order = "f[plastic-bar]-f[expendable-air-filter]",
+        order = "f[plastic-bar]-a[expendable-air-filter]",
         energy_required = 2,
-        enabled = true,
+        enabled = false,
         ingredients =
         {
             { "coal", 5 },
@@ -64,9 +64,9 @@ data:extend({
         name = "air-filter",
         category = "crafting",
         subgroup = "raw-material",
-        order = "f[plastic-bar]-f[air-filter]",
+        order = "f[plastic-bar]-b[air-filter]",
         energy_required = 5,
-        enabled = true,
+        enabled = false,
         ingredients =
         {
             { "coal", 10 },
@@ -94,15 +94,16 @@ data:extend({
         icon_size = 32,
         category = "crafting",
         subgroup = "raw-material",
-        order = "f[air-filter]-f[air-filter-recycling]",
+        order = "f[plastic-bar]-c[air-filter-recycling]",
         energy_required = 2,
-        enabled = true,
+        enabled = false,
         ingredients =
         {
             { "used-air-filter", 1 },
             { "coal", 5 }
         },
-        result = "air-filter"
+        result = "air-filter",
+        main_product = ""
     },
     {
         type = "recipe",
@@ -121,9 +122,9 @@ data:extend({
         icon_size = 32,
         category = "air-filtering-basic",
         subgroup = "raw-material",
-        order = "f[plastic-bar]-f[filter-air]",
+        order = "a[filter-air]",
         energy_required = 1,
-        enabled = true,
+        enabled = false,
         ingredients =
         {
             { type = "fluid", name = "pollution", amount = 2, fluidbox_index = 1 }
@@ -147,15 +148,16 @@ data:extend({
         icon_size = 32,
         category = "air-filtering-advanced",
         subgroup = "raw-material",
-        order = "f[plastic-bar]-f[filter-air]",
+        order = "b[filter-air]",
         energy_required = 5,
-        enabled = true,
+        enabled = false,
         ingredients =
         {
             { type = "fluid", name = "pollution", amount = 20, fluidbox_index = 1 },
             { type = "item", name = "air-filter", amount = 1 },
         },
-        results = { { type = "item", name = "used-air-filter", amount = 1 } }
+        results = { { type = "item", name = "used-air-filter", amount = 1 } },
+        main_product = ""
     },
     {
         type = "recipe",
@@ -163,9 +165,9 @@ data:extend({
         hide_from_player_crafting = true,
         category = "air-filtering-advanced",
         subgroup = "raw-material",
-        order = "f[plastic-bar]-f[filter-air]",
+        order = "c[filter-air]",
         energy_required = 1,
-        enabled = true,
+        enabled = false,
         ingredients =
         {
             { type = "fluid", name = "pollution", amount = 6, fluidbox_index = 1 },

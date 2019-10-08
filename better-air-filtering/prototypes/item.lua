@@ -47,7 +47,7 @@ data:extend({
         stack_size = 10,
         fuel_category = "pollution-filter",
         burnt_result = nil,
-        fuel_value = "60MW",
+        fuel_value = "30MW",
     },
     {
         type = "item",
@@ -60,7 +60,7 @@ data:extend({
         stack_size = 50,
         fuel_category = "pollution-filter",
         burnt_result = "used-air-filter",
-        fuel_value = "120MW",
+        fuel_value = "60MW",
     },
     {
         type = "item",

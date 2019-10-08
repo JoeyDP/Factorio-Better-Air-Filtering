@@ -457,8 +457,6 @@ function onEntityRemoved(event)
         game.print("Dispersing " .. pollution .. " pollution back")
         event.entity.surface.pollute(event.entity.position, pollution)
     end
-
-    -- TODO disperse contents when recipe changes
 end
 
 function preEntityRemoved(event)
@@ -538,7 +536,6 @@ script.on_event(defines.events.on_tick, onTick)
 script.on_load(load)
 script.on_init(init)
 script.on_configuration_changed(init)
-
 
 
 
