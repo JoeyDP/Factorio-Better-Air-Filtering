@@ -111,6 +111,46 @@ end
 --  #   Update script   #
 --  #####################
 
+--function updateInserters(event)
+    --for _, surface in pairs(game.surfaces) do
+    --    local inserters = surface.find_entities_filtered({type="inserter"})
+    --    for _, inserter in pairs(inserters) do
+    --        updateInserter(inserter)
+    --    end
+    --end
+--end
+
+--function updateInserter(inserter)
+    --game.print(serpent.line(inserter.position))
+    --local drop_target = inserter.drop_target
+    --if drop_target == nil then return end
+    --local pickup_target = inserter.pickup_target
+    --if pickup_target == nil then return end
+    --local burnt_result_inventory = pickup_target.get_burnt_result_inventory()
+    --if burnt_result_inventory == nil then return end
+    --if burnt_result_inventory.is_empty() then return end
+    --if inserter.get_item_count() > 0 then return end
+    --
+    --
+    --local contents = burnt_result_inventory.get_contents()
+    --
+    --
+    --for item_name, count in pairs (contents) do
+    --    fuel_item_name = item_name
+    --end
+    --
+    --if inserter.get_item_count() < 1 then
+    --    if inserter.held_stack.valid_for_read == false then
+    --        if pickup_target.get_item_count(fuel_item_name) > 0 then
+    --            inserter.held_stack.set_stack({name = fuel_item_name, count = 1})
+    --            pickup_target.remove_item({name = fuel_item_name, count = 1})
+    --            return
+    --        end
+    --    end
+    --end
+--end
+
+
 function absorbPollution(event)
     --    game.print("insertPollution")
     for _, c in pairs(air_filtered_chunks) do
@@ -137,6 +177,9 @@ function absorbChunk(chunk)
 
     local totalInsertedAmount = 0.0
     for _, filter in pairs(chunk.filters) do
+
+        local test = filter.get_output_inventory().insert({name="used-air-filter", count=1})
+        game.print("Inserted " .. test .. " items in output")
         local toInsert = (getAbsorptionRate(filter) / totalAbsorptionRate) * toAbsorb
         if toInsert > 0 then
             local insertedAmount = filter.insert_fluid({ name = "pollution", amount = toInsert })
@@ -243,6 +286,8 @@ function generateFunctions()
             table.insert(functions, f)
         end
     end
+
+    --table.insert(functions, updateInserters)
 
     return functions
 end

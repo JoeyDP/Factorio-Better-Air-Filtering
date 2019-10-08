@@ -19,7 +19,9 @@ The upgraded version has a stronger filtering effect. In addition, by using a mo
 The third and final upgrade of the air filtering machine features a larger radius of three chunks along with more air filtering per second.
 
 #### Filter Types
-There are currently two types of filters: __expendable filters__ and __recyclable filters__. The first ones are easier to craft, but filter out less pollution and are destroyed upon use. __Recyclable filters__ are more expensive but can be refreshed with a bit of coal to be used again.
+There are currently two types of filters: __expendable filters__ and __recyclable filters__. The first ones are easier to craft, but filter out less pollution and are destroyed upon use. Recyclable filters are more expensive but can be refreshed with a bit of coal to be used again.
+
+> Known issue: used air filters cannot be extracted from the first tier of air filter machines by inserters. Factorio does not feature inserters that can extract from burnt_result_inventory.
 
 ## Technical Details
 Some things to keep in mind when using this mod:
