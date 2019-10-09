@@ -7,3 +7,11 @@ Date: 2019.10.08
     - Only English
   License:
     - Using MIT License.
+---------------------------------------------------------------------------------------------------
+Version: 0.1.1
+Date: 2019.10.09
+  Features:
+    - Pollution is now registered in the pollution statistics rather than the fluid statistics.
+    - Air filter machines now accept speed and efficiency modules or beacon effects.
+  Fixes:
+    - Invalid entity issue when removing air filter machine during update resolved.

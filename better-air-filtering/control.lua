@@ -38,13 +38,6 @@ function positionToChunk(position)
     return { x = math.floor(position.x / 32), y = math.floor(position.y / 32) }
 end
 
-function movePollution(surface, chunkFrom, chunkTo, amount)
-    amount = math.min(amount, surface.get_pollution(chunkToPosition(chunkFrom)))
-    surface.pollute(chunkToPosition(chunkFrom), -amount)
-    surface.pollute(chunkToPosition(chunkTo), amount)
-    return amount
-end
-
 function getBasePurificationRate(entity)
     -- Depends mostly on recipe (optimal recipe used per machine). Should be multiplied by crafting speed to achieve actual max purification rate
     if entity.name == "air-filter-machine-1" then
@@ -176,10 +169,11 @@ function absorbChunk(chunk)
     --    game.print("To absorb: " .. toAbsorb)
 
     local totalInsertedAmount = 0.0
-    for _, filter in pairs(chunk.filters) do
+    for _, filter in pairs(chunk:getFilters()) do
         local toInsert = (getAbsorptionRate(filter) / totalAbsorptionRate) * toAbsorb
         if toInsert > 0 then
             local insertedAmount = filter.insert_fluid({ name = "pollution", amount = toInsert })
+            game.pollution_statistics.on_flow(filter.name, -insertedAmount)
             totalInsertedAmount = totalInsertedAmount + insertedAmount
         end
     end
@@ -332,13 +326,14 @@ local FilteredChunk = {
     surface = nil,
     x = 0,
     y = 0,
-    filters = {},
+    --filters = {}
 }
 
 function FilteredChunk:new (o)
     o = o or {}
     setmetatable(o, self)
     self.__index = self
+    o.filters = o.filters or {}
     return o
 end
 
@@ -347,7 +342,6 @@ function createFilteredChunk(surface, x, y)
     chunk.surface = surface
     chunk.x = x
     chunk.y = y
-    chunk.filters = {}      -- this statement, though it appears to have no effect, has a large impact on the saving of global state.
     return chunk
 end
 
@@ -355,7 +349,25 @@ function FilteredChunk:equal(other)
     return self.surface.name == other.surface.name and self.x == other.x and self.y == other.y
 end
 
+function FilteredChunk:getFilters()
+    local filters = {}
+    for _, filter in pairs(self.filters) do
+        if filter.valid then
+            table.insert(filters, filter)
+        end
+    end
+    self.filters = filters
+    return filters
+end
+
 function FilteredChunk:addToMap()
+
+    --game.print("Active chunks before: ")
+    --for i, c in pairs(air_filtered_chunks) do
+    --    game.print(serpent.line(c))
+    --end
+    --game.print(serpent.block(global.air_filtered_chunks_map))
+
     --game.print("Adding chunk to map")
     local chunkListX = global.air_filtered_chunks_map[self.surface.name] or {}
     local chunkListY = chunkListX[self.x] or {}
@@ -364,23 +376,47 @@ function FilteredChunk:addToMap()
     chunkListX[self.x] = chunkListY
     global.air_filtered_chunks_map[self.surface.name] = chunkListX
     table.insert(air_filtered_chunks, self)
+
+
+    --game.print("Active chunks after: ")
+    --for i, c in pairs(air_filtered_chunks) do
+    --    game.print(serpent.line(c))
+    --end
+    --game.print(serpent.block(global.air_filtered_chunks_map))
 end
 
 function FilteredChunk:removeFromMap()
     --game.print("Removing chunk from map")
-    table.remove(global.air_filtered_chunks_map[self.surface.name][self.x], self.y)
+    global.air_filtered_chunks_map[self.surface.name][self.x][self.y] = nil
+
     for i, c in pairs(air_filtered_chunks) do
         if self:equal(c) then
-            table.remove(air_filtered_chunks, i)
             --game.print("Removing chunk from list")
+            table.remove(air_filtered_chunks, i)
             break
         end
     end
+
+    --local i = 1
+    --while i <= #air_filtered_chunks do
+    --    local c = air_filtered_chunks[i]
+    --    if self:equal(c) then
+    --        --game.print("Removing chunk from list")
+    --        table.remove(air_filtered_chunks, i)
+    --    else
+    --        i = i + 1
+    --    end
+    --end
+
+    --game.print("Remaining chunks: ")
+    --for _, c in pairs(air_filtered_chunks) do
+    --    game.print(serpent.line(c))
+    --end
 end
 
 function FilteredChunk:getTotalAbsorptionRate()
     local totalAbsorptionRate = 0.0
-    for _, filter in pairs(self.filters) do
+    for _, filter in pairs(self:getFilters()) do
         local absorptionRate = getAbsorptionRate(filter)
         totalAbsorptionRate = totalAbsorptionRate + absorptionRate
     end
@@ -389,7 +425,7 @@ end
 
 function FilteredChunk:getTotalSuctionRate(distance)
     local totalSuctionRate = 0.0
-    for _, filter in pairs(self.filters) do
+    for _, filter in pairs(self:getFilters()) do
         if inRadius(filter, distance) then
             local suctionRate = getSuctionRate(filter)
             totalSuctionRate = totalSuctionRate + suctionRate
@@ -498,6 +534,7 @@ function onEntityRemoved(event)
     if pollution > 0 then
         --game.print("Dispersing " .. pollution .. " pollution back")
         event.entity.surface.pollute(event.entity.position, pollution)
+        game.pollution_statistics.on_flow(event.entity.name, pollution)
     end
 end
 
@@ -522,6 +559,7 @@ function preEntityRemoved(event)
         if pollution > 0 then
             --game.print("Dispersing " .. pollution .. " pollution back")
             event.entity.surface.pollute(event.entity.position, pollution)
+            game.pollution_statistics.on_flow(event.entity.name, pollution)
         end
     end
 

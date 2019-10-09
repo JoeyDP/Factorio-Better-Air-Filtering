@@ -72,7 +72,10 @@ data:extend({
         fixed_recipe = "filter-air",
         ingredient_count = 1,
         return_ingredients_on_change = true,
-        module_slots = 0,
+        module_specification =
+        {
+            module_slots = 0
+        },
         allowed_effects=nil
     },
     {
@@ -162,9 +165,12 @@ data:extend({
         energy_usage = "50kW",
         fixed_recipe = "filter-air2",
         ingredient_count = 2,
+        module_specification =
+        {
+            module_slots = 2
+        },
+        allowed_effects = {"consumption", "speed"},
         return_ingredients_on_change = true,
-        module_slots = 0,
-        allowed_effects=nil
     },
     {
         type = "assembling-machine",
@@ -251,8 +257,12 @@ data:extend({
         energy_usage = "100kW",
         fixed_recipe = "filter-air2",
         ingredient_count = 2,
+        module_specification =
+        {
+            module_slots = 3
+        },
+        allowed_effects = {"consumption", "speed"},
         return_ingredients_on_change = true,
         module_slots = 0,
-        allowed_effects=nil
     }
 })

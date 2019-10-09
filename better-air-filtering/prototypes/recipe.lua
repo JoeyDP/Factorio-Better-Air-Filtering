@@ -109,6 +109,7 @@ data:extend({
         type = "recipe",
         name = "filter-air",
         hide_from_player_crafting = true,
+        hide_from_stats = true,
         icons = {
             {
                 icon = "__base__/graphics/icons/fluid/pollution.png"
@@ -135,6 +136,7 @@ data:extend({
         type = "recipe",
         name = "filter-air2",
         hide_from_player_crafting = true,
+        hide_from_stats = true,
         icons = {
             {
                 icon = "__base__/graphics/icons/fluid/pollution.png"
@@ -163,6 +165,7 @@ data:extend({
         type = "recipe",
         name = "liquid-pollution",
         hide_from_player_crafting = true,
+        hide_from_stats = true,
         category = "air-filtering-advanced",
         subgroup = "raw-material",
         order = "c[filter-air]",
