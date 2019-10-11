@@ -23,10 +23,13 @@ There are currently two types of filters: __expendable filters__ and __recyclabl
 
 > Known issue: used air filters cannot be extracted from the first tier of air filter machines by inserters. Factorio does not feature inserters that can extract from burnt_result_inventory.
 
+
 ## Technical Details
 Some things to keep in mind when using this mod:
  - The [evolution](https://wiki.factorio.com/Enemies#Evolution) factor of enemies is based on the total amount of produced pollution. Cleaning it back up does not reverse this effect. This means that biters will still get stronger, no matter how proficient you are at cleaning pollution. You can prevent attacks caused by pollution reaching the biter nests however.
  - Pollution from other chunks is sucked toward air filters at an exponentially decreasing rate depending on the distance. The formula is `suction = base_suction * (1/4)^distance`. This means that filters only pull in approximately as much pollution as they can filter.
+ - When an air filter machine or any other entity containing pollution is destroyed or mined, the pollution inside is dispersed back into the atmosphere.
+
 
 ## Changes
 Refer to the Factorio mod page for the complete [changelog](https://mods.factorio.com/mod/better-air-filtering/changelog).
@@ -40,3 +43,7 @@ Refer to the Factorio mod page for the complete [changelog](https://mods.factori
 > Important! This mod is in it's early stages of development and has not yet been extensively tested and balanced.
 
 If you experience issues, please notify me on the [forum](https://mods.factorio.com/mod/better-air-filtering/discussion). Suggestions for future releases are also welcome.
+
+## Contribute
+First and foremost, suggestions for balancing changes or new features are greatly appreciated. If you create a nice setup with this mod, feel free to share some screenshots or gifs as well. This can be done on the [forum](https://mods.factorio.com/mod/better-air-filtering/discussion) or via [PM](https://forums.factorio.com/ucp.php?i=pm&mode=compose&u=75847).
+Changes in the code can be suggested through a pull request on [github](https://github.com/JoeyDP/Factorio-Better-Air-Filtering).
