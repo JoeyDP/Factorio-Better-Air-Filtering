@@ -163,6 +163,35 @@ data:extend({
     },
     {
         type = "recipe",
+        name = "filter-air-expendable",
+        hide_from_player_crafting = true,
+        hide_from_stats = true,
+        icons = {
+            {
+                icon = "__base__/graphics/icons/fluid/pollution.png"
+            },
+            {
+                icon = "__better-air-filtering__/graphics/icons/recipe/filter-air.png",
+                scale = 0.6,
+                shift = { 6, 6 }
+            },
+        },
+        icon_size = 32,
+        category = "air-filtering-advanced",
+        subgroup = "raw-material",
+        order = "b[filter-air]",
+        energy_required = 3,
+        enabled = false,
+        ingredients =
+        {
+            { type = "fluid", name = "pollution", amount = 10, fluidbox_index = 1 },
+            { type = "item", name = "expendable-air-filter", amount = 1 },
+        },
+        results = {},
+        main_product = ""
+    },
+    {
+        type = "recipe",
         name = "liquid-pollution",
         hide_from_player_crafting = true,
         hide_from_stats = true,

@@ -12,26 +12,25 @@ data:extend({
         alert_icon_shift = util.by_pixel(-3, -12),
         collision_box = { { -1.2, -1.2 }, { 1.2, 1.2 } },
         selection_box = { { -1.5, -1.5 }, { 1.5, 1.5 } },
-        animation =
-        {
-            layers =
-            {
+        animation = {
+            layers = {
                 {
                     filename = "__better-air-filtering__/graphics/entity/air-filter-machine-1.png",
-                    priority="medium",
+                    priority = "medium",
                     width = 108,
                     height = 114,
                     frame_count = 32,
-                    animation_speed=0.8,
+                    animation_speed = 0.8,
                     line_length = 8,
                     shift = util.by_pixel(0, 2)
                 },
                 {
                     filename = "__better-air-filtering__/graphics/entity/air-filter-machine-shadow.png",
-                    priority="medium",
+                    priority = "medium",
                     width = 95,
                     height = 83,
                     frame_count = 1,
+                    animation_speed = 0.8,
                     line_length = 1,
                     repeat_count = 32,
                     draw_as_shadow = true,
@@ -42,17 +41,15 @@ data:extend({
         match_animation_speed_to_activity = true,
         open_sound = { filename = "__base__/sound/machine-open.ogg", volume = 0.85 },
         close_sound = { filename = "__base__/sound/machine-close.ogg", volume = 0.75 },
-        working_sound =
-        {
+        working_sound = {
             sound = { { filename = "__base__/sound/electric-furnace.ogg", volume = 0.7 } },
             idle_sound = { filename = "__base__/sound/idle1.ogg", volume = 0.6 },
             apparent_volume = 1.5,
         },
-        fluid_boxes =
-        {
+        fluid_boxes = {
             {
                 production_type = "input",
-                base_area = 10,
+                base_area = 2,
                 base_level = -1,
                 pipe_connections = {},
             },
@@ -60,8 +57,7 @@ data:extend({
         },
         crafting_categories = { "air-filtering-basic" },
         crafting_speed = 0.5,
-        energy_source =
-        {
+        energy_source = {
             type = "burner",
             fuel_category = "pollution-filter",
             usage_priority = "secondary-input",
@@ -72,14 +68,13 @@ data:extend({
         fixed_recipe = "filter-air",
         ingredient_count = 1,
         return_ingredients_on_change = true,
-        module_specification =
-        {
+        module_specification = {
             module_slots = 0
         },
-        allowed_effects=nil
+        allowed_effects = nil
     },
     {
-        type = "assembling-machine",
+        type = "furnace",
         name = "air-filter-machine-2",
         icon = "__better-air-filtering__/graphics/icons/air-filter-machine-2.png",
         icon_size = 32,
@@ -92,10 +87,8 @@ data:extend({
         alert_icon_shift = util.by_pixel(-3, -12),
         collision_box = { { -1.2, -1.2 }, { 1.2, 1.2 } },
         selection_box = { { -1.5, -1.5 }, { 1.5, 1.5 } },
-        animation =
-        {
-            layers =
-            {
+        animation = {
+            layers = {
                 {
                     filename = "__better-air-filtering__/graphics/entity/air-filter-machine-2.png",
                     priority = "medium",
@@ -107,7 +100,7 @@ data:extend({
                 },
                 {
                     filename = "__better-air-filtering__/graphics/entity/air-filter-machine-shadow.png",
-                    priority="medium",
+                    priority = "medium",
                     width = 95,
                     height = 83,
                     frame_count = 1,
@@ -119,57 +112,55 @@ data:extend({
             }
         },
         match_animation_speed_to_activity = true,
+        entity_info_icon_shift={0, -0.3},
+        scale_entity_info_icon = true,
         open_sound = { filename = "__base__/sound/machine-open.ogg", volume = 0.85 },
         close_sound = { filename = "__base__/sound/machine-close.ogg", volume = 0.75 },
-        working_sound =
-        {
+        working_sound = {
             sound = { { filename = "__base__/sound/electric-furnace.ogg", volume = 0.7 } },
             idle_sound = { filename = "__base__/sound/idle1.ogg", volume = 0.6 },
             apparent_volume = 1.5,
         },
-        fluid_boxes =
-        {
+        fluid_boxes = {
             {
                 production_type = "input",
-                base_area = 10,
+                base_area = 2,
                 base_level = -1,
-                pipe_connections= {}
+                pipe_connections = {}
             },
-            {
-                production_type = "input",
-                pipe_picture = assembler2pipepictures(),
-                pipe_covers = pipecoverspictures(),
-                base_area = 10,
-                base_level = -1,
-                pipe_connections = {{ type="input", position = {0, -2} }}
-            },
-            {
-                production_type = "output",
-                pipe_picture = assembler2pipepictures(),
-                pipe_covers = pipecoverspictures(),
-                base_area = 10,
-                base_level = 1,
-                pipe_connections = { { type = "output", position = { 0, 2 } } },
-                secondary_draw_orders = { north = -1 }
-            },
+            --{
+            --    production_type = "input",
+            --    pipe_picture = assembler2pipepictures(),
+            --    pipe_covers = pipecoverspictures(),
+            --    base_area = 10,
+            --    base_level = -1,
+            --    pipe_connections = {{ type="input", position = {0, -2} }}
+            --},
+            --{
+            --    production_type = "output",
+            --    pipe_picture = assembler2pipepictures(),
+            --    pipe_covers = pipecoverspictures(),
+            --    base_area = 10,
+            --    base_level = 1,
+            --    pipe_connections = { { type = "output", position = { 0, 2 } } },
+            --    secondary_draw_orders = { north = -1 }
+            --},
             off_when_no_fluid_recipe = true
         },
         crafting_categories = { "air-filtering-advanced" },
         crafting_speed = 1.0,
-        energy_source =
-        {
+        energy_source = {
             type = "electric",
             usage_priority = "secondary-input",
-            drain="100kW",
+            drain = "100kW",
         },
         energy_usage = "50kW",
-        fixed_recipe = "filter-air2",
-        ingredient_count = 2,
-        module_specification =
-        {
+        result_inventory_size = 1,
+        source_inventory_size = 1,
+        module_specification = {
             module_slots = 2
         },
-        allowed_effects = {"consumption", "speed"},
+        allowed_effects = { "consumption", "speed" },
         return_ingredients_on_change = true,
     },
     {
@@ -184,10 +175,8 @@ data:extend({
         corpse = "medium-remnants",
         collision_box = { { -1.2, -1.2 }, { 1.2, 1.2 } },
         selection_box = { { -1.5, -1.5 }, { 1.5, 1.5 } },
-        animation =
-        {
-            layers =
-            {
+        animation = {
+            layers = {
                 {
                     filename = "__better-air-filtering__/graphics/entity/air-filter-machine-3.png",
                     priority = "medium",
@@ -199,7 +188,7 @@ data:extend({
                 },
                 {
                     filename = "__better-air-filtering__/graphics/entity/air-filter-machine-shadow.png",
-                    priority="medium",
+                    priority = "medium",
                     width = 95,
                     height = 83,
                     frame_count = 1,
@@ -213,33 +202,31 @@ data:extend({
         match_animation_speed_to_activity = true,
         open_sound = { filename = "__base__/sound/machine-open.ogg", volume = 0.85 },
         close_sound = { filename = "__base__/sound/machine-close.ogg", volume = 0.75 },
-        working_sound =
-        {
+        working_sound = {
             sound = { { filename = "__base__/sound/electric-furnace.ogg", volume = 0.7 } },
             idle_sound = { filename = "__base__/sound/idle1.ogg", volume = 0.6 },
             apparent_volume = 1.5,
         },
-        fluid_boxes =
-        {
+        fluid_boxes = {
             {
                 production_type = "input",
-                base_area = 10,
+                base_area = 2,
                 base_level = -1,
-                pipe_connections= {}
+                pipe_connections = {}
             },
             {
                 production_type = "input",
                 pipe_picture = assembler3pipepictures(),
                 pipe_covers = pipecoverspictures(),
-                base_area = 10,
+                base_area = 2,
                 base_level = -1,
-                pipe_connections = {{ type="input", position = {0, -2} }}
+                pipe_connections = { { type = "input", position = { 0, -2 } } }
             },
             {
                 production_type = "output",
                 pipe_picture = assembler3pipepictures(),
                 pipe_covers = pipecoverspictures(),
-                base_area = 10,
+                base_area = 2,
                 base_level = 1,
                 pipe_connections = { { type = "output", position = { 0, 2 } } },
                 secondary_draw_orders = { north = -1 }
@@ -248,20 +235,18 @@ data:extend({
         },
         crafting_categories = { "air-filtering-advanced" },
         crafting_speed = 1.25,
-        energy_source =
-        {
+        energy_source = {
             type = "electric",
             usage_priority = "secondary-input",
-            drain="200kW",
+            drain = "200kW",
         },
         energy_usage = "100kW",
         fixed_recipe = "filter-air2",
         ingredient_count = 2,
-        module_specification =
-        {
+        module_specification = {
             module_slots = 3
         },
-        allowed_effects = {"consumption", "speed"},
+        allowed_effects = { "consumption", "speed" },
         return_ingredients_on_change = true,
         module_slots = 0,
     }

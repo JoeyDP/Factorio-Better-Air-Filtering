@@ -2,7 +2,7 @@ data:extend({
     {
         type = "technology",
         name = "air-filtering-1",
-        localised_description = {"technology-description.air-filtering-1"},
+        localised_description = { "technology-description.air-filtering-1" },
         icon = "__better-air-filtering__/graphics/technology/air-filtering-1.png",
         icon_size = "64",
         prerequisites = { "automation", "electronics" },
@@ -78,7 +78,7 @@ data:extend({
     {
         type = "technology",
         name = "air-filtering-2",
-        localised_description = {"technology-description.air-filtering-2"},
+        localised_description = { "technology-description.air-filtering-2" },
         icon = "__better-air-filtering__/graphics/technology/air-filtering-2.png",
         icon_size = "64",
         prerequisites = { "air-filtering-1", "reusable-air-filters", "advanced-electronics" },
@@ -87,10 +87,13 @@ data:extend({
                 type = "unlock-recipe",
                 recipe = "air-filter-machine-2"
             },
-
             {
                 type = "unlock-recipe",
                 recipe = "filter-air2"
+            },
+            {
+                type = "unlock-recipe",
+                recipe = "filter-air-expendable"
             }
         },
         unit = {
@@ -107,7 +110,7 @@ data:extend({
     {
         type = "technology",
         name = "air-filtering-3",
-        localised_description = {"technology-description.air-filtering-3"},
+        localised_description = { "technology-description.air-filtering-3" },
         icon = "__better-air-filtering__/graphics/technology/air-filtering-3.png",
         icon_size = "64",
         prerequisites = { "air-filtering-2" },
