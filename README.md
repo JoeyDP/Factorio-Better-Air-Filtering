@@ -1,9 +1,9 @@
 # Better Air Filtering
 #### A mod for Factorio that provides complex air filtering steps to remove pollution.
-Based on the [air filtering mod](https://mods.factorio.com/mod/air-filtering) by [Schorty](https://mods.factorio.com/user/Schorty)
+Based on the [air filtering mod](https://mods.factorio.com/mod/air-filtering) by [Schorty](https://mods.factorio.com/user/Schorty).
 
 ## Overview
-![overview](https://github.com/JoeyDP/Factorio-Better-Air-Filtering/blob/master/res/overview.png?raw=true)
+![overview](https://github.com/JoeyDP/Factorio-Better-Air-Filtering/blob/master/res/setup.gif?raw=true)
 
 This mod features three tiers of air filtering machines. These machines remove pollution from the air in their region by using air filters. Each consecutive tier has a larger radius and stronger filtering effect. Keep in mind that you will still need filters spread around your base at strategic locations to effectively counteract the spread of pollution.  
 
