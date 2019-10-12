@@ -158,8 +158,8 @@ function absorbChunk(chunk)
 
     local totalAbsorptionRate = chunk:getTotalAbsorptionRate()
 
-    --    game.print("totalAbsorptionRate: " .. totalAbsorptionRate)
-    --    game.print("filter count: " .. #chunk.filters)
+    --game.print("totalAbsorptionRate: " .. totalAbsorptionRate)
+    --game.print("filter count: " .. #chunk.filters)
 
     if totalAbsorptionRate == 0 then
         return

@@ -49,7 +49,7 @@ data:extend({
         fluid_boxes = {
             {
                 production_type = "input",
-                base_area = 2,
+                base_area = 0.2,
                 base_level = -1,
                 pipe_connections = {},
             },
@@ -124,7 +124,7 @@ data:extend({
         fluid_boxes = {
             {
                 production_type = "input",
-                base_area = 2,
+                base_area = 0.4,
                 base_level = -1,
                 pipe_connections = {}
             },
@@ -164,7 +164,7 @@ data:extend({
         return_ingredients_on_change = true,
     },
     {
-        type = "assembling-machine",
+        type = "furnace",
         name = "air-filter-machine-3",
         icon = "__better-air-filtering__/graphics/icons/air-filter-machine-3.png",
         icon_size = 32,
@@ -210,27 +210,27 @@ data:extend({
         fluid_boxes = {
             {
                 production_type = "input",
-                base_area = 2,
+                base_area = 0.4,
                 base_level = -1,
                 pipe_connections = {}
             },
-            {
-                production_type = "input",
-                pipe_picture = assembler3pipepictures(),
-                pipe_covers = pipecoverspictures(),
-                base_area = 2,
-                base_level = -1,
-                pipe_connections = { { type = "input", position = { 0, -2 } } }
-            },
-            {
-                production_type = "output",
-                pipe_picture = assembler3pipepictures(),
-                pipe_covers = pipecoverspictures(),
-                base_area = 2,
-                base_level = 1,
-                pipe_connections = { { type = "output", position = { 0, 2 } } },
-                secondary_draw_orders = { north = -1 }
-            },
+            --{
+            --    production_type = "input",
+            --    pipe_picture = assembler3pipepictures(),
+            --    pipe_covers = pipecoverspictures(),
+            --    base_area = 2,
+            --    base_level = -1,
+            --    pipe_connections = { { type = "input", position = { 0, -2 } } }
+            --},
+            --{
+            --    production_type = "output",
+            --    pipe_picture = assembler3pipepictures(),
+            --    pipe_covers = pipecoverspictures(),
+            --    base_area = 2,
+            --    base_level = 1,
+            --    pipe_connections = { { type = "output", position = { 0, 2 } } },
+            --    secondary_draw_orders = { north = -1 }
+            --},
             off_when_no_fluid_recipe = true
         },
         crafting_categories = { "air-filtering-advanced" },
@@ -242,12 +242,12 @@ data:extend({
         },
         energy_usage = "100kW",
         fixed_recipe = "filter-air2",
-        ingredient_count = 2,
+        result_inventory_size = 1,
+        source_inventory_size = 1,
         module_specification = {
             module_slots = 3
         },
         allowed_effects = { "consumption", "speed" },
         return_ingredients_on_change = true,
-        module_slots = 0,
     }
 })

@@ -1,6 +1,6 @@
 # Better Air Filtering
 #### A mod for Factorio that provides complex air filtering steps to remove pollution.
-
+Based on the [air filtering mod](https://mods.factorio.com/mod/air-filtering) by [Schorty](https://mods.factorio.com/user/Schorty)
 
 ## Overview
 ![overview](https://github.com/JoeyDP/Factorio-Better-Air-Filtering/blob/master/res/overview.png?raw=true)
@@ -26,6 +26,8 @@ There are currently two types of filters: __expendable filters__ and __recyclabl
 
 ## Technical Details
 Some things to keep in mind when using this mod:
+
+ - Pollution updates are very UPS efficient. The suction of pollution is implemented per chunk, rather than per machine and updates are spread evenly over an interval of 20 ticks.
  - The [evolution](https://wiki.factorio.com/Enemies#Evolution) factor of enemies is based on the total amount of produced pollution. Cleaning it back up does not reverse this effect. This means that biters will still get stronger, no matter how proficient you are at cleaning pollution. You can prevent attacks caused by pollution reaching the biter nests however.
  - Pollution from other chunks is sucked toward air filters at an exponentially decreasing rate depending on the distance. The formula is `suction = base_suction * (1/4)^distance`. This means that filters only pull in approximately as much pollution as they can filter.
  - When an air filter machine or any other entity containing pollution is destroyed or mined, the pollution inside is dispersed back into the atmosphere.
@@ -37,7 +39,7 @@ Refer to the Factorio mod page for the complete [changelog](https://mods.factori
 
 ## Future Features
  - A third and more efficient air filtering production chain based on first "dissolving" pollution in water and then treating it in chemical plants.
-
+ - Support for signals, and a potential integration with https://mods.factorio.com/mod/pollution-detector.
 
 ## Bugs / Crashes / Suggestions
 > Important! This mod is in it's early stages of development and has not yet been extensively tested and balanced.

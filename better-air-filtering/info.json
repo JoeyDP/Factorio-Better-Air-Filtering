@@ -8,7 +8,8 @@
   "factorio_version": "0.17",
   "dependencies": [
     "base >= 0.17",
-    "!air-filtering"
+    "!air-filtering",
+    "!NauvisDay"
   ],
-  "description": "An overhaul of the air filtering mod by Schorty."
+  "description": "An overhaul of the air filtering mod by Schorty. Includes complex air filtering steps to remove pollution."
 }

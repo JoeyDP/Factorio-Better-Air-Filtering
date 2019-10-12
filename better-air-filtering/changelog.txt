@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.1.2
+Date: 2019.10.12
+  Features:
+    - Air filters tier 2 and 3 now behave like furnaces. They accept expendable air filters as well as reusable ones.
+    - Fluid capacity of air filter machines reduced to more reasonable amounts.  
+  Locale:
+    - EN for reusable air filter tech.
+---------------------------------------------------------------------------------------------------
 Version: 0.1.1
 Date: 2019.10.09
   Features:
@@ -10,9 +18,9 @@ Date: 2019.10.09
 Version: 0.1.0
 Date: 2019.10.08
   Info:
-    - Initial release
+    - Initial release.
   Locale:
-    - Only English
+    - English.
   License:
-    - Using MIT License.
+    - MIT License.
 
