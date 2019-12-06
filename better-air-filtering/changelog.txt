@@ -1,4 +1,15 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.1.4
+Date: 2019.11.16
+  Features:
+    - Improved performance thanks to Elrood (https://mods.factorio.com/mod/better-air-filtering/discussion/5de458a8b40f56000b3ca43c)
+    - Setting for update interval (can be changed for better UPS).
+---------------------------------------------------------------------------------------------------
+Version: 0.1.3
+Date: 2019.11.16
+  Locale:
+    - EN for pollution filter fuel category.
+---------------------------------------------------------------------------------------------------
 Version: 0.1.2
 Date: 2019.10.12
   Features:

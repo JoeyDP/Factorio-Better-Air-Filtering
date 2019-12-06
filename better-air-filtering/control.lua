@@ -2,7 +2,7 @@
 --  #   Constants   #
 --  #################
 
-local INTERVAL = 20
+local INTERVAL = settings.global["baf-update-interval"].value
 
 
 
@@ -104,45 +104,6 @@ end
 --  #   Update script   #
 --  #####################
 
---function updateInserters(event)
-    --for _, surface in pairs(game.surfaces) do
-    --    local inserters = surface.find_entities_filtered({type="inserter"})
-    --    for _, inserter in pairs(inserters) do
-    --        updateInserter(inserter)
-    --    end
-    --end
---end
-
---function updateInserter(inserter)
-    --game.print(serpent.line(inserter.position))
-    --local drop_target = inserter.drop_target
-    --if drop_target == nil then return end
-    --local pickup_target = inserter.pickup_target
-    --if pickup_target == nil then return end
-    --local burnt_result_inventory = pickup_target.get_burnt_result_inventory()
-    --if burnt_result_inventory == nil then return end
-    --if burnt_result_inventory.is_empty() then return end
-    --if inserter.get_item_count() > 0 then return end
-    --
-    --
-    --local contents = burnt_result_inventory.get_contents()
-    --
-    --
-    --for item_name, count in pairs (contents) do
-    --    fuel_item_name = item_name
-    --end
-    --
-    --if inserter.get_item_count() < 1 then
-    --    if inserter.held_stack.valid_for_read == false then
-    --        if pickup_target.get_item_count(fuel_item_name) > 0 then
-    --            inserter.held_stack.set_stack({name = fuel_item_name, count = 1})
-    --            pickup_target.remove_item({name = fuel_item_name, count = 1})
-    --            return
-    --        end
-    --    end
-    --end
---end
-
 
 function absorbPollution(event)
     --    game.print("insertPollution")
@@ -209,7 +170,7 @@ function suctionUpdateChunk(chunkTo, dx, dy)
     local chunkFrom = getFilteredChunk(chunkTo.surface, chunkTo.x + dx, chunkTo.y + dy)
     local test = chunkFrom:getTotalSuctionRate(0)
     local pollution = chunkFrom:get_pollution()
-    if pollution > 0 then
+    if pollution > 0.1 then
         local toPollute = math.min(pollution, totalSuction)
         local chunksVia = {}
         for _, step in pairs(stepsToOrigin(dx, dy)) do
@@ -269,6 +230,8 @@ end
 
 function generateFunctions()
     local functions = {}
+
+    table.insert(functions, function(event) game.print(event.tick) end)
 
     table.insert(functions, absorbPollution)
 
@@ -601,14 +564,14 @@ end
 
 
 -- Set up callbacks
-
 script.on_event({ defines.events.on_built_entity, defines.events.on_robot_built_entity }, onEntityCreated)
+
 
 -- on_entity_died should trigger both functions -> called manually
 script.on_event({ defines.events.on_player_mined_entity, defines.events.on_robot_mined_entity, defines.events.on_entity_died }, onEntityRemoved)
 script.on_event({ defines.events.on_pre_player_mined_item, defines.events.on_pre_robot_mined_item, defines.events.on_entity_died }, preEntityRemoved)
 
-local functions = generateFunctions()
+functions = generateFunctions()
 local onTick = spreadOverTicks(functions, INTERVAL)
 script.on_event(defines.events.on_tick, onTick)
 
@@ -617,5 +580,17 @@ script.on_init(init)
 script.on_configuration_changed(init)
 
 
+function onSettingsChanged(event)
+    game.print("Settings changed")
+    game.print(serpent.line(event))
+    INTERVAL = settings.global["baf-update-interval"].value
+
+    game.print("Interval: " .. INTERVAL)
+
+    local onTick = spreadOverTicks(functions, INTERVAL)
+    script.on_event(defines.events.on_tick, onTick)
+end
+
+script.on_event(defines.events.on_runtime_mod_setting_changed, onSettingsChanged)
 
 

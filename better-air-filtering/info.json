@@ -1,6 +1,6 @@
 {
   "name": "better-air-filtering",
-  "version": "0.1.2",
+  "version": "0.1.4",
   "title": "Better Air Filtering",
   "author": "Joey De Pauw",
   "contact": "joeydepauw@gmail.com",
@@ -9,7 +9,8 @@
   "dependencies": [
     "base >= 0.17",
     "!air-filtering",
-    "!NauvisDay"
+    "!NauvisDay",
+    "!CW-carbon-capture"
   ],
   "description": "An overhaul of the air filtering mod by Schorty. Includes complex air filtering steps to remove pollution."
 }
