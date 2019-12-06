@@ -1,8 +1,11 @@
 ---------------------------------------------------------------------------------------------------
-Version: 0.1.4
+Version: 0.2.0
 Date: 2019.11.16
-  Features:
+  Performance:
     - Improved performance thanks to Elrood (https://mods.factorio.com/mod/better-air-filtering/discussion/5de458a8b40f56000b3ca43c)
+  Features:
+    - Recycling now has a slight chance of breaking the filter.
+    - Increased power consumption of mk2 and mk3 machines.
     - Setting for update interval (can be changed for better UPS).
 ---------------------------------------------------------------------------------------------------
 Version: 0.1.3

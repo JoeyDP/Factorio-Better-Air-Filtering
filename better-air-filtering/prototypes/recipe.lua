@@ -12,8 +12,7 @@ data:extend({
         name = "air-filter-machine-1",
         energy_required = 10.0,
         enabled = false,
-        ingredients =
-        {
+        ingredients = {
             { "assembling-machine-1", 1 },
             { "electronic-circuit", 5 }
         },
@@ -24,8 +23,7 @@ data:extend({
         name = "air-filter-machine-2",
         energy_required = 10.0,
         enabled = false,
-        ingredients =
-        {
+        ingredients = {
             { "air-filter-machine-1", 2 },
             { "steel-plate", 10 },
             { "advanced-circuit", 10 }
@@ -37,8 +35,7 @@ data:extend({
         name = "air-filter-machine-3",
         energy_required = 10.0,
         enabled = false,
-        ingredients =
-        {
+        ingredients = {
             { "air-filter-machine-2", 2 },
             { "processing-unit", 10 }
         },
@@ -52,8 +49,7 @@ data:extend({
         order = "f[plastic-bar]-a[expendable-air-filter]",
         energy_required = 2,
         enabled = false,
-        ingredients =
-        {
+        ingredients = {
             { "coal", 5 },
             { "iron-plate", 2 },
         },
@@ -67,8 +63,7 @@ data:extend({
         order = "f[plastic-bar]-b[air-filter]",
         energy_required = 5,
         enabled = false,
-        ingredients =
-        {
+        ingredients = {
             { "coal", 10 },
             { "plastic-bar", 4 },
             { "steel-plate", 2 }
@@ -97,12 +92,19 @@ data:extend({
         order = "f[plastic-bar]-c[air-filter-recycling]",
         energy_required = 2,
         enabled = false,
-        ingredients =
-        {
+        ingredients = {
             { "used-air-filter", 1 },
             { "coal", 5 }
         },
         result = "air-filter",
+        results = {
+            { type = "item",
+              name = "air-filter",
+              amount = 1,
+              probability = 0.95,
+              catalyst_amount = 1
+            }
+        },
         main_product = ""
     },
     {
@@ -126,8 +128,7 @@ data:extend({
         order = "a[filter-air]",
         energy_required = 1,
         enabled = false,
-        ingredients =
-        {
+        ingredients = {
             { type = "fluid", name = "pollution", amount = 2, fluidbox_index = 1 }
         },
         results = {}
@@ -153,8 +154,7 @@ data:extend({
         order = "b[filter-air]",
         energy_required = 5,
         enabled = false,
-        ingredients =
-        {
+        ingredients = {
             { type = "fluid", name = "pollution", amount = 20, fluidbox_index = 1 },
             { type = "item", name = "air-filter", amount = 1 },
         },
@@ -182,8 +182,7 @@ data:extend({
         order = "b[filter-air]",
         energy_required = 3,
         enabled = false,
-        ingredients =
-        {
+        ingredients = {
             { type = "fluid", name = "pollution", amount = 10, fluidbox_index = 1 },
             { type = "item", name = "expendable-air-filter", amount = 1 },
         },
@@ -200,8 +199,7 @@ data:extend({
         order = "c[filter-air]",
         energy_required = 1,
         enabled = false,
-        ingredients =
-        {
+        ingredients = {
             { type = "fluid", name = "pollution", amount = 6, fluidbox_index = 1 },
             { type = "fluid", name = "water", amount = 10, fluidbox_index = 2 }
         },

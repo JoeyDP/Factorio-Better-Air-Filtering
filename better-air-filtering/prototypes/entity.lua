@@ -152,9 +152,9 @@ data:extend({
         energy_source = {
             type = "electric",
             usage_priority = "secondary-input",
-            drain = "100kW",
+            drain = "200kW",
         },
-        energy_usage = "50kW",
+        energy_usage = "100kW",
         result_inventory_size = 1,
         source_inventory_size = 1,
         module_specification = {
@@ -238,9 +238,9 @@ data:extend({
         energy_source = {
             type = "electric",
             usage_priority = "secondary-input",
-            drain = "200kW",
+            drain = "300kW",
         },
-        energy_usage = "100kW",
+        energy_usage = "200kW",
         fixed_recipe = "filter-air2",
         result_inventory_size = 1,
         source_inventory_size = 1,

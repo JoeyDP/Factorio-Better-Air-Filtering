@@ -231,8 +231,6 @@ end
 function generateFunctions()
     local functions = {}
 
-    table.insert(functions, function(event) game.print(event.tick) end)
-
     table.insert(functions, absorbPollution)
 
     for radius = 1, 4 do
@@ -581,11 +579,7 @@ script.on_configuration_changed(init)
 
 
 function onSettingsChanged(event)
-    game.print("Settings changed")
-    game.print(serpent.line(event))
     INTERVAL = settings.global["baf-update-interval"].value
-
-    game.print("Interval: " .. INTERVAL)
 
     local onTick = spreadOverTicks(functions, INTERVAL)
     script.on_event(defines.events.on_tick, onTick)
