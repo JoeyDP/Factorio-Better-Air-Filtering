@@ -19,7 +19,7 @@ The upgraded version has a stronger filtering effect. In addition, by using a mo
 The third and final upgrade of the air filtering machine features a larger radius of three chunks along with more air filtering per second.
 
 ### Filter Types
-There are currently two types of filters: __expendable filters__ and __recyclable filters__. The first ones are easier to craft, but filter out less pollution and are destroyed upon use. Recyclable filters are more expensive but can be refreshed with a bit of coal to be used again.
+There are currently two types of filters: __expendable filters__ and __recyclable filters__. The first ones are easier to craft, but filter out less pollution and are destroyed upon use. Recyclable filters are more expensive but can be refreshed with a bit of coal to be used again. However, beware that there is a slight chance the filter breaks in the recycling process.
 
 > Known issue: used air filters cannot be extracted from the first tier of air filter machines by inserters. Factorio does not feature inserters that can extract from burnt_result_inventory.
 
@@ -27,7 +27,7 @@ There are currently two types of filters: __expendable filters__ and __recyclabl
 ## Technical Details
 Some things to keep in mind when using this mod:
 
- - Pollution updates are very UPS efficient. The suction of pollution is implemented per chunk, rather than per machine and updates are spread evenly over an interval of 20 ticks.
+ - Pollution updates are very UPS efficient. The suction of pollution is implemented per chunk, rather than per machine and updates are spread evenly over an interval of 20 ticks (default). The interval can be changed in the settings.
  - The [evolution](https://wiki.factorio.com/Enemies#Evolution) factor of enemies is based on the total amount of produced pollution. Cleaning it back up does not reverse this effect. This means that biters will still get stronger, no matter how proficient you are at cleaning pollution. You can prevent attacks caused by pollution reaching the biter nests however.
  - Pollution from other chunks is sucked toward air filters at an exponentially decreasing rate depending on the distance. The formula is `suction = base_suction * (1/4)^distance`. This means that filters only pull in approximately as much pollution as they can filter.
  - When an air filter machine or any other entity containing pollution is destroyed or mined, the pollution inside is dispersed back into the atmosphere.
