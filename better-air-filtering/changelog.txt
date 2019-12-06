@@ -1,6 +1,6 @@
 ---------------------------------------------------------------------------------------------------
 Version: 0.2.0
-Date: 2019.11.16
+Date: 2019.12.06
   Performance:
     - Improved performance thanks to Elrood (https://mods.factorio.com/mod/better-air-filtering/discussion/5de458a8b40f56000b3ca43c)
   Features:
