@@ -2,7 +2,7 @@
 --  #   Constants   #
 --  #################
 
-local INTERVAL = settings.global["baf-update-interval"].value
+local INTERVAL
 
 
 
@@ -168,7 +168,6 @@ function suctionUpdateChunk(chunkTo, dx, dy)
     --    game.print("suction: " .. totalSuction)
 
     local chunkFrom = getFilteredChunk(chunkTo.surface, chunkTo.x + dx, chunkTo.y + dy)
-    local test = chunkFrom:getTotalSuctionRate(0)
     local pollution = chunkFrom:get_pollution()
     if pollution > 0.1 then
         local toPollute = math.min(pollution, totalSuction)
@@ -530,6 +529,21 @@ function preEntityRemoved(event)
     end
 end
 
+
+
+
+-- Set up callbacks
+script.on_event({ defines.events.on_built_entity, defines.events.on_robot_built_entity }, onEntityCreated)
+
+
+-- on_entity_died should trigger both functions -> called manually
+script.on_event({ defines.events.on_player_mined_entity, defines.events.on_robot_mined_entity, defines.events.on_entity_died }, onEntityRemoved)
+script.on_event({ defines.events.on_pre_player_mined_item, defines.events.on_pre_robot_mined_item, defines.events.on_entity_died }, preEntityRemoved)
+
+
+local functions = generateFunctions()
+
+
 function refreshMetatables()
     for _, chunkListX in pairs(global.air_filtered_chunks_map) do
         for x, chunkListY in pairs(chunkListX) do
@@ -540,6 +554,18 @@ function refreshMetatables()
         end
     end
 end
+
+function load()
+    refreshMetatables()
+
+    INTERVAL = settings.global["baf-update-interval"].value
+
+    onTick = spreadOverTicks(functions, INTERVAL)
+    script.on_event(defines.events.on_tick, onTick)
+end
+
+script.on_load(load)
+
 
 function init()
     -- gather all filters on every surface
@@ -556,33 +582,16 @@ function init()
     end
 end
 
-function load()
-    refreshMetatables()
-end
-
-
--- Set up callbacks
-script.on_event({ defines.events.on_built_entity, defines.events.on_robot_built_entity }, onEntityCreated)
-
-
--- on_entity_died should trigger both functions -> called manually
-script.on_event({ defines.events.on_player_mined_entity, defines.events.on_robot_mined_entity, defines.events.on_entity_died }, onEntityRemoved)
-script.on_event({ defines.events.on_pre_player_mined_item, defines.events.on_pre_robot_mined_item, defines.events.on_entity_died }, preEntityRemoved)
-
-functions = generateFunctions()
-local onTick = spreadOverTicks(functions, INTERVAL)
-script.on_event(defines.events.on_tick, onTick)
-
-script.on_load(load)
 script.on_init(init)
 script.on_configuration_changed(init)
 
-
 function onSettingsChanged(event)
-    INTERVAL = settings.global["baf-update-interval"].value
+    if event.setting == "baf-update-interval" then
+        INTERVAL = settings.global["baf-update-interval"].value
 
-    local onTick = spreadOverTicks(functions, INTERVAL)
-    script.on_event(defines.events.on_tick, onTick)
+        onTick = spreadOverTicks(functions, INTERVAL)
+        script.on_event(defines.events.on_tick, onTick)
+    end
 end
 
 script.on_event(defines.events.on_runtime_mod_setting_changed, onSettingsChanged)
