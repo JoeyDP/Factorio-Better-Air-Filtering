@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 0.2.2
+Date: 2020.01.03
+  Fixes:
+    - Air filter machine mk1 changed to type furnace.
+    - Air filter machine mk1 removed from fast replace group.
+---------------------------------------------------------------------------------------------------
 Version: 0.2.1
 Date: 2019.12.14
   Fixes:
