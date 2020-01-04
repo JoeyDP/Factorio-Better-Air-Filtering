@@ -557,15 +557,12 @@ end
 
 function load()
     refreshMetatables()
-
-    INTERVAL = settings.global["baf-update-interval"].value
-
-    onTick = spreadOverTicks(functions, INTERVAL)
-    script.on_event(defines.events.on_tick, onTick)
+    if INTERVAL ~= settings.global["baf-update-interval"].value then
+        setup()
+    end
 end
 
 script.on_load(load)
-
 
 function init()
     -- gather all filters on every surface
@@ -587,13 +584,18 @@ script.on_configuration_changed(init)
 
 function onSettingsChanged(event)
     if event.setting == "baf-update-interval" then
-        INTERVAL = settings.global["baf-update-interval"].value
-
-        onTick = spreadOverTicks(functions, INTERVAL)
-        script.on_event(defines.events.on_tick, onTick)
+        setup()
     end
 end
 
 script.on_event(defines.events.on_runtime_mod_setting_changed, onSettingsChanged)
 
 
+function setup()
+    INTERVAL = settings.global["baf-update-interval"].value
+
+    onTick = spreadOverTicks(functions, INTERVAL)
+    script.on_event(defines.events.on_tick, onTick)
+end
+
+setup()
