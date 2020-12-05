@@ -1,13 +1,13 @@
 {
   "name": "better-air-filtering",
-  "version": "0.2.3",
+  "version": "0.3.1",
   "title": "Better Air Filtering",
   "author": "Joey De Pauw",
   "contact": "joeydepauw@gmail.com",
   "homepage": "",
-  "factorio_version": "0.17",
+  "factorio_version": "1.1",
   "dependencies": [
-    "base >= 0.17",
+    "base >= 1.1",
     "!air-filtering",
     "!NauvisDay",
     "!CW-carbon-capture"

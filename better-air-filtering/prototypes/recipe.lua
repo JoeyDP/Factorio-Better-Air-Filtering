@@ -114,7 +114,7 @@ data:extend({
         hide_from_stats = true,
         icons = {
             {
-                icon = "__base__/graphics/icons/fluid/pollution.png"
+                icon = "__better-air-filtering__/graphics/icons/fluid/pollution.png"
             },
             {
                 icon = "__better-air-filtering__/graphics/icons/recipe/filter-air.png",
@@ -140,7 +140,7 @@ data:extend({
         hide_from_stats = true,
         icons = {
             {
-                icon = "__base__/graphics/icons/fluid/pollution.png"
+                icon = "__better-air-filtering__/graphics/icons/fluid/pollution.png"
             },
             {
                 icon = "__better-air-filtering__/graphics/icons/recipe/filter-air.png",
@@ -168,7 +168,7 @@ data:extend({
         hide_from_stats = true,
         icons = {
             {
-                icon = "__base__/graphics/icons/fluid/pollution.png"
+                icon = "__better-air-filtering__/graphics/icons/fluid/pollution.png"
             },
             {
                 icon = "__better-air-filtering__/graphics/icons/recipe/filter-air.png",
