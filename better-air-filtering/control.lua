@@ -566,6 +566,7 @@ script.on_load(load)
 
 function init()
     -- gather all filters on every surface
+    air_filtered_chunks = {}
     global.air_filtered_chunks_map = {}
     for _, surface in pairs(game.surfaces) do
         local filters = surface.find_entities_filtered {
