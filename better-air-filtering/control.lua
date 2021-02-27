@@ -413,6 +413,9 @@ function FilteredChunk:addFilter(filter)
     end
 end
 
+-- Remove a filter machine from its chunk
+-- If this is removing the last filter, the record
+-- for this chunk is dropped.
 function FilteredChunk:removeFilter(filter)
     for i, f in pairs(self.filters) do
         if f.unit_number == filter.unit_number then
@@ -425,6 +428,9 @@ function FilteredChunk:removeFilter(filter)
     end
 end
 
+-- either return an existing FilteredChunk for the given coordinates,
+-- or create a new one at the corresponding coordinates if there are
+-- no existing filters on this chunk
 function getFilteredChunk(surface, x, y)
     local chunkListX = global.air_filtered_chunks_map[surface.name]
     if chunkListX ~= nil then
@@ -449,6 +455,8 @@ function isAirFilterMachine(entity)
     return starts_with(entity.name, "air-filter-machine-")
 end
 
+-- when a new machine is created, add it to the list of filters
+-- on whichever chunk it is on
 function onEntityCreated(event)
     if isAirFilterMachine(event.created_entity) then
         local chunkPos = positionToChunk(event.created_entity.position)
