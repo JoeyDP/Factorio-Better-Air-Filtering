@@ -58,18 +58,6 @@ function energyCraftingModifier(entity)
     end
 end
 
-function getSuctionRate(entity)
-    if not entity.is_crafting() and getSpaceForPollution(entity) == 0 then
-        return 0
-    else
-        return getBasePurificationRate(entity) * entity.crafting_speed * energyCraftingModifier(entity)
-    end
-end
-
-function getAbsorptionRate(entity)
-    return math.min(getSpaceForPollution(entity), getSuctionRate(entity))
-end
-
 function pollutionInPollutedWater(amount)
     return amount * 6 / 10
 end
@@ -85,6 +73,18 @@ function getSpaceForPollution(entity)
         pollution = pollutionFluid.amount
     end
     return capacity - pollution
+end
+
+function getSuctionRate(entity)
+    if not entity.is_crafting() and getSpaceForPollution(entity) == 0 then
+        return 0
+    else
+        return getBasePurificationRate(entity) * entity.crafting_speed * energyCraftingModifier(entity)
+    end
+end
+
+function getAbsorptionRate(entity)
+    return math.min(getSpaceForPollution(entity), getSuctionRate(entity))
 end
 
 function inRadius(filter, radius)
