@@ -87,6 +87,14 @@ function getAbsorptionRate(entity)
     return math.min(getSpaceForPollution(entity), getSuctionRate(entity))
 end
 
+function getTotalAbsorptionRate(filters)
+    local totalAbsorptionRate = 0.0
+    for _, filter in pairs(filters) do
+        totalAbsorptionRate = totalAbsorptionRate + getAbsorptionRate(filter)
+    end
+    return totalAbsorptionRate
+end
+
 function inRadius(filter, radius)
     if filter.name == "air-filter-machine-1" then
         return radius <= 0
@@ -112,27 +120,31 @@ function absorbPollution(event)
 end
 
 function absorbChunk(chunk)
-    if chunk:get_pollution() == 0 then
+    local chunk_pollution = chunk:get_pollution()
+    if chunk_pollution == 0 then
         return
     end
 
-    local totalAbsorptionRate = chunk:getTotalAbsorptionRate()
+    local filters = chunk:getFilters()
+    local totalAbsorptionRate = getTotalAbsorptionRate(filters)
 
     --game.print("totalAbsorptionRate: " .. totalAbsorptionRate)
-    --game.print("filter count: " .. #chunk.filters)
+    --game.print("filter count: " .. #filters)
 
     if totalAbsorptionRate == 0 then
         return
     end
 
-    local toAbsorb = math.min(chunk:get_pollution(), totalAbsorptionRate)
+    local toAbsorb = math.min(chunk_pollution, totalAbsorptionRate)
     --    game.print("To absorb: " .. toAbsorb)
 
     local totalInsertedAmount = 0.0
-    for _, filter in pairs(chunk:getFilters()) do
+    local fluid = { name = "pollution", amount = 0.0 }
+    for _, filter in pairs(filters) do
         local toInsert = (getAbsorptionRate(filter) / totalAbsorptionRate) * toAbsorb
         if toInsert > 0 then
-            local insertedAmount = filter.insert_fluid({ name = "pollution", amount = toInsert })
+            fluid.amount = toInsert
+            local insertedAmount = filter.insert_fluid(fluid)
             game.pollution_statistics.on_flow(filter.name, -insertedAmount)
             totalInsertedAmount = totalInsertedAmount + insertedAmount
         end
@@ -148,10 +160,10 @@ function stepsToOrigin(x, y)
     -- Provide coordinates of possible 1-steps toward (0, 0)
     local steps = {}
     if x ~= 0 then
-        table.insert(steps, { x = x - sign(x), y = y })
+        table.insert(steps, { x - sign(x), y })
     end
     if y ~= 0 then
-        table.insert(steps, { x = x, y = y - sign(y) })
+        table.insert(steps, { x, y - sign(y) })
     end
     return steps
 end
@@ -178,11 +190,10 @@ function suctionUpdateChunk(chunkTo, dx, dy)
         --game.print("Moving " .. toPollute .. " pollution")
         --game.print("From: " .. position[1] .. ", " .. position[2] .. " (" .. toPollute .. ")")
 
-        -- TODO: creating the table in stepsToOrigin can be unrolled
         local steps = stepsToOrigin(dx, dy)
         for _, step in pairs(steps) do
-            position[1] = (chunkTo.x + step.x) * 32
-            position[2] = (chunkTo.y + step.y) * 32
+            position[1] = (chunkTo.x + step[1]) * 32
+            position[2] = (chunkTo.y + step[2]) * 32
             surface.pollute(position, toPollute / #steps)
             --game.print("To: " .. position[1] .. ", " .. position[2] .. " (" .. (toPollute / #steps) .. ")")
         end
@@ -374,15 +385,6 @@ function FilteredChunk:removeFromMap()
     --for _, c in pairs(air_filtered_chunks) do
     --    game.print(serpent.line(c))
     --end
-end
-
-function FilteredChunk:getTotalAbsorptionRate()
-    local totalAbsorptionRate = 0.0
-    for _, filter in pairs(self:getFilters()) do
-        local absorptionRate = getAbsorptionRate(filter)
-        totalAbsorptionRate = totalAbsorptionRate + absorptionRate
-    end
-    return totalAbsorptionRate
 end
 
 function FilteredChunk:getTotalSuctionRate(distance)
