@@ -99,7 +99,6 @@ function inRadius(filter, radius)
     end
 end
 
-
 --  #####################
 --  #   Update script   #
 --  #####################
@@ -167,23 +166,26 @@ function suctionUpdateChunk(chunkTo, dx, dy)
     --    game.print("From " .. dx .. ", " .. dy)
     --    game.print("suction: " .. totalSuction)
 
-    local chunkFrom = getFilteredChunk(chunkTo.surface, chunkTo.x + dx, chunkTo.y + dy)
-    local pollution = chunkFrom:get_pollution()
+    local surface = chunkTo.surface
+    -- get_pollution can handle indexed x, y as well as named x, y
+    local position = { (chunkTo.x + dx) * 32, (chunkTo.y + dy) * 32 }
+
+    local pollution = surface.get_pollution(position)
     if pollution > 0.1 then
         local toPollute = math.min(pollution, totalSuction)
-        local chunksVia = {}
-        for _, step in pairs(stepsToOrigin(dx, dy)) do
-            local chunk = getFilteredChunk(chunkTo.surface, chunkTo.x + step.x, chunkTo.y + step.y)
-            table.insert(chunksVia, chunk)
-        end
+        -- first, unpollute the chunkFrom
+        surface.pollute(position, -toPollute)
+        --game.print("Moving " .. toPollute .. " pollution")
+        --game.print("From: " .. position[1] .. ", " .. position[2] .. " (" .. toPollute .. ")")
 
-        --        game.print("Moving " .. toPollute .. " pollution")
-        --        game.print("From: " .. chunkFrom.x .. ", " .. chunkFrom.y)
-        for _, chunkVia in pairs(chunksVia) do
-            --            game.print("To: " .. chunkVia.x .. ", " .. chunkVia.y)
-            chunkVia:pollute(toPollute / #chunksVia)
+        -- TODO: creating the table in stepsToOrigin can be unrolled
+        local steps = stepsToOrigin(dx, dy)
+        for _, step in pairs(steps) do
+            position[1] = (chunkTo.x + step.x) * 32
+            position[2] = (chunkTo.y + step.y) * 32
+            surface.pollute(position, toPollute / #steps)
+            --game.print("To: " .. position[1] .. ", " .. position[2] .. " (" .. (toPollute / #steps) .. ")")
         end
-        chunkFrom:pollute(-toPollute)
     end
 end
 
