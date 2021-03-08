@@ -191,11 +191,12 @@ function suctionUpdateChunk(chunkTo, dx, dy)
         --game.print("From: " .. position[1] .. ", " .. position[2] .. " (" .. toPollute .. ")")
 
         local steps = stepsToOrigin(dx, dy)
+        toPollute = toPollute / #steps
         for _, step in pairs(steps) do
             position[1] = (chunkTo.x + step[1]) * 32
             position[2] = (chunkTo.y + step[2]) * 32
-            surface.pollute(position, toPollute / #steps)
-            --game.print("To: " .. position[1] .. ", " .. position[2] .. " (" .. (toPollute / #steps) .. ")")
+            surface.pollute(position, toPollute)
+            --game.print("To: " .. position[1] .. ", " .. position[2] .. " (" .. toPollute .. ")")
         end
     end
 end
